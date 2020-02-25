@@ -10,7 +10,7 @@ const { clearifyNumber } = require('../helpers/utils');
 module.exports = class {
 
     constructor() {
-		this.language = {
+            this.language = {
 
             PERM_LEVELS: [
                 "User",
@@ -62,12 +62,12 @@ module.exports = class {
             HELP_TITLE: "Commands List",
             HELP_SUBTITLE: (prefix) => `Use \`${prefix}help [command]\` for more details\nNeed support? Join [Cat](${l.supportChannelInvite})`,
             HELP_HEADINGS: [
-				"Command:",
-				"Usage:",
-				"Examples:",
-				"Group:",
-				"Description:",
-				"Aliases:",
+                        "Command:",
+                        "Usage:",
+                        "Examples:",
+                        "Group:",
+                        "Description:",
+                        "Aliases:",
                 "User permissions:",
                 "Bot permissions:"
             ],
@@ -120,7 +120,7 @@ module.exports = class {
 
             /* ADD */
             ADD_DESCRIPTION: "add catnip",
-            ADD_USAGE: "$add [@user> <amount]",
+            ADD_USAGE: "$add [@user] [amount]",
             ADD_EXAMPLES: "$add @Komatsu 100",
             ADD_ERR_NO_USER: `${e.error} | Missing user`,
             ADD_ERR_NO_AMOUNT: `${e.error} | Missing catnip amount`,
@@ -136,6 +136,11 @@ module.exports = class {
             TAKE_ERR_USER_BOT: `${e.error} | Cannot take catnip from bot`,
             TAKE_INFO: (from, to, amount) => `**${to}** has been taken **${clearifyNumber(amount)} catnip** by **${from}**`,
         
+            /** CLEAN */
+            CLEAN_DESCRIPTION: "clean the last 15 messages of Mon",
+            CLEAN_USAGE: "$clean",
+            CLEAN_EXAMPLES: "$cl",
+
             /** LEADERBOARD */
             LEADERBOARD_DESCRIPTION: "Global leaderboard: catnip, battle streak, power,...",
             LEADERBOARD_USAGE: "$leaderboard [category] [limit]",
@@ -378,7 +383,7 @@ module.exports = class {
             SPEAK_ERR_NOT_VIEWABLE: (channel) => `${e.error} | Missing permission \`VIEW_CHANNEL\` with **${channel}**`,
             SPEAK_ERR_NOT_JOINABLE: (channel) => `${e.error} | Mon can not join **${channel}**`,
             SPEAK_ERR_NOT_SPEAKABLE: (channel) => `${e.error} | Mon can not speak in **${channel}**`,
-            SPEAK_ERR_TOO_LONG: (max) => `${e.error} | Maximum **${max}** words per sentence!`,
+            SPEAK_ERR_TOO_LONG: (max, guildPre) => `${e.error} | Maximum **${max}** words per sentence${guildPre ? " in **Premium Guild**" : ""}!`,
 
             /** LEVEL */
             LEVEL_DESCRIPTION: "Level, rank, rewards",
@@ -660,7 +665,7 @@ module.exports = class {
             ITEM_DETAIL_TITLE: `CAT ITEM`,
             ITEM_USER_LIST: (user) => `${user}'s Items`,
             ITEM_ERR_INVALID_QUANTITY: (quantity) => `${e.error} | Invalid quantity: ${quantity}`,
-			ITEM_USE_ERR_ID_NOT_FOUND: (id) => `${e.error} | You do not own any item with ID: ${id}`,
+                  ITEM_USE_ERR_ID_NOT_FOUND: (id) => `${e.error} | You do not own any item with ID: ${id}`,
             ITEM_USE_SUCCESS: (user, item, quantity) => `${e.success} | **${user}** used ${quantity} x **${item}**`,
             
             /** GADGETS */
@@ -880,6 +885,70 @@ module.exports = class {
             COMMAND_ENABLE_SUCCESS: (isGuild, cmds) => `${e.success} | Enabled command(s) \`${cmds.map((c) => "`"+c+"`").join(", ")}\` in this ${isGuild ? 'server' : 'channel'}`,
             COMMAND_ENABLE_ALL_SUCCESS: (isGuild) => `${e.success} | Enable all commands in this ${isGuild ? 'server' : 'channel'}`,
 
+            /** BATTLE */
+            /** CHARACTER */
+            CHARACTER_DESCRIPTION: "Claim, search, reroll and check your character",
+            CHARACTER_USAGE: "$character",
+            CHARACTER_EXAMPLES: "$c",
+
+            CHARACTER_CLAIM_DESCRIPTION: "Claim a character",
+            CHARACTER_CLAIM_USAGE: "$character claim",
+            CHARACTER_CLAIM_EXAMPLES: "$c c",
+            CHARACTER_REROLL_DESCRIPTION: "Reroll a random character",
+            CHARACTER_REROLL_USAGE: "$character reroll",
+            CHARACTER_REROLL_EXAMPLES: "$c rr",
+            CHARACTER_UPGRADE_DESCRIPTION: "Upgrade your character",
+            CHARACTER_UPGRADE_USAGE: "$character upgrade [gem type] [quantity]",
+            CHARACTER_UPGRADE_EXAMPLES: "$c up index 100\n$c up skill 100\n$c up star 100", // use 100 index gem (or skill gem or star gem) 
+            CHARACTER_MINE_DESCRIPTION: "Check your character",
+            CHARACTER_MINE_USAGE: "$character mine",
+            CHARACTER_MINE_EXAMPLES: "$c me",
+            CHARACTER_INFO_DESCRIPTION: "Check a character's info",
+            CHARACTER_INFO_USAGE: "$character info [name]",
+            CHARACTER_INFO_EXAMPLES: "$c i nobita",
+            CHARACTER_SEARCH_DESCRIPTION: "Search character",
+            CHARACTER_SEARCH_USAGE: "$character search [name]",
+            CHARACTER_SEARCH_EXAMPLES: "$c ls nobi",
+            CHARACTER_CREATE_DESCRIPTION: "Create a character",
+            CHARACTER_CREATE_USAGE: "$character create [name]",
+            CHARACTER_CREATE_EXAMPLES: "$c add nobita",
+            CHARACTER_DELETE_DESCRIPTION: "Delete a character",
+            CHARACTER_DELETE_USAGE: "$character delete [name]",
+            CHARACTER_DELETE_EXAMPLES: "$c del nobita",
+            CHARACTER_EDIT_DESCRIPTION: "Edit a character",
+            CHARACTER_EDIT_USAGE: "$character edit [name] [field] [value]",
+            CHARACTER_EDIT_EXAMPLES: "$c edit nobita spawnrate 0.5",
+
+            CHARACTER_CREATE_ERR_EXIST: (name) => `${e.error} | Character **${name}** already exists!`,
+            CHARACTER_CREATE_SUCCESS: (name, id) => `${e.success} | Added new character **${name}**, ID: **${id}**`,
+            CHARACTER_ERR_INVALID_NAME: (name) => `${e.error} | Invalid character name: ${name}`,
+            CHARACTER_ERR_NOT_FOUND: `${e.error} | Character not found`,
+            CHARACTER_DELETE_SUCCESS: (name) => `${e.success} | Deleted character **${name}**`,
+            ERR_INVALID_FIELD: (field, FIELDS) => `${e.error} | Field **${field}** not exist. Try ${FIELDS.map((p) => "`"+p+"`").join(", ")}`,
+            CHARACTER_NOT_FOUND: `Character not found`,
+            CHARACTER_LIST_TITLE: `BATTLE CHARACTERS`,
+            CHARACTER_DETAIL_TITLE: `BATTLE CHARACTER`,
+            CHARACTER_USER_LIST: (user) => `${user}'s characters`,
+
+            CHARACTER_RARE_DESCS: {
+                0: 'normal',
+                1: 'vip',
+                2: 'legend'
+            },
+            CHARACTER_INFO_TYPE: "Type",
+            CHARACTER_INFO_STARS: "Stars",
+            CHARACTER_INFO_SPAWN_RATE: "Spawn rate",
+            CHARACTER_INFO_SKILL_RATE: "Skill rate",
+            CHARACTER_SEARCH_TITLE: (key) => `Searching characters for: ${key}`,
+            CHARACTER_INFO_BASIC_INDEX: "Basic",
+            CHARACTER_INFO_EXTEND_INDEX: "Extend",
+            CHARACTER_CLAIM_SUCCESS: (user, char) => `${user} has claimed a(n) ${char}`,
+            CHARACTER_CLAIM_GUIDE: (prefix) => `Use \`${prefix}help character\` to see list actions`,
+            CHARACTER_USER_LIST: (user) => `${user}'s Characters`,
+            CHARACTER_REROLL_ERR_INVALID_ID: `${e.error} | Invalid character ID(s)`,
+            CHARACTER_REROLL_ERR_NOT_ENOUGH: (char, count) => `${e.error} | Not enough ${count} ${char} to reroll`,
+            CHARACTER_REROLL_SUCCESS: (user, char) => `${user} has rerolled a(n) ${char}`,
+
             /* COMMON WORDS */
             ID_NOT_FOUND: (id) => `ID **${id}** not found`,
             USER_NOT_FOUND: "User not found",
@@ -911,33 +980,37 @@ module.exports = class {
             PRICE: "Price",
             QUANTITY: "Quantity",
             REWARD: "Reward",
-            ENDED: "Ended"
+            ENDED: "Ended",
+            TYPE: "Type",
+            STOCK: "Stock",
+            LEVEL: "Level",
+            EXPIRATION: "Expiration"
         }
     }
 
     /**
-	 * The method to get language strings
-	 * @param {string} term The string or function to look up
-	 * @param {...*} args Any arguments to pass to the lookup
-	 * @returns {string|Function}
-	 */
-	get(term, ...args) {
-		const value = this.language[term];
-		switch (typeof value) {
-			case "function": return value(...args);
-			default: return value;
-		}
-	}
+       * The method to get language strings
+       * @param {string} term The string or function to look up
+       * @param {...*} args Any arguments to pass to the lookup
+       * @returns {string|Function}
+       */
+      get(term, ...args) {
+            const value = this.language[term];
+            switch (typeof value) {
+                  case "function": return value(...args);
+                  default: return value;
+            }
+      }
 
-	getLang(){
-		return currentLanguage;
+      getLang(){
+            return currentLanguage;
     }
 
     getLangCode() {
         return langCode;
     }
 
-	printDate(pdate, isLongDate){
+      printDate(pdate, isLongDate){
         const monthNames = [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
         let day = pdate.getDate(),
         monthIndex = pdate.getMonth(),
@@ -948,37 +1021,37 @@ module.exports = class {
         let thedate = (isLongDate) ? day + " " + monthNames[monthIndex] + " " + year + " at " + hour + "h" + minute 
         : day + " " + monthNames[monthIndex] + " " + year
         return thedate;
-	}
-	
-	/**
-	 * Parse ms and returns a string
-	 * @param {number} milliseconds The amount of milliseconds
-	 * @returns The parsed milliseconds
-	 */
-	convertMs(milliseconds, allowZero){
-		let roundTowardsZero = milliseconds > 0 ? Math.floor : Math.ceil;
-		let days = roundTowardsZero(milliseconds / 86400000),
-		hours = roundTowardsZero(milliseconds / 3600000) % 24,
-		minutes = roundTowardsZero(milliseconds / 60000) % 60,
-		seconds = roundTowardsZero(milliseconds / 1000) % 60;
-		// if(seconds === 0 && !allowZero) seconds++;
-		let isDays = days > 0,
-		isHours = hours > 0,
+      }
+      
+      /**
+       * Parse ms and returns a string
+       * @param {number} milliseconds The amount of milliseconds
+       * @returns The parsed milliseconds
+       */
+      convertMs(milliseconds, allowZero){
+            let roundTowardsZero = milliseconds > 0 ? Math.floor : Math.ceil;
+            let days = roundTowardsZero(milliseconds / 86400000),
+            hours = roundTowardsZero(milliseconds / 3600000) % 24,
+            minutes = roundTowardsZero(milliseconds / 60000) % 60,
+            seconds = roundTowardsZero(milliseconds / 1000) % 60;
+            // if(seconds === 0 && !allowZero) seconds++;
+            let isDays = days > 0,
+            isHours = hours > 0,
         isMinutes = minutes > 0,
         isSeconds = seconds > 0;
-		let pattern = 
+            let pattern = 
         (!isDays ? "" : "{days}D ")+
         (!isHours ? "" : "{hours}H ")+
         (!isMinutes ? "" : "{minutes}M ")+
         (!isSeconds ? "" : (!isDays && !isHours && !isMinutes ? "{seconds}s" : "{seconds}S"))
 
-		let sentence = pattern
+            let sentence = pattern
         .replace("{duration}", pattern)
         .replace("{days}", days)
         .replace("{hours}", hours)
         .replace("{minutes}", minutes)
         .replace("{seconds}", seconds);
-		return sentence.trim();
-	}
+            return sentence.trim();
+      }
 
 }
