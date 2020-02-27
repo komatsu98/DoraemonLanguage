@@ -900,8 +900,8 @@ module.exports = class {
             CHARACTER_UPGRADE_USAGE: "$character upgrade [gem type] [quantity]",
             CHARACTER_UPGRADE_EXAMPLES: "$c up index 100\n$c up skill 100\n$c up star 100", // use 100 index gem (or skill gem or star gem) 
             CHARACTER_MINE_DESCRIPTION: "Kiểm tra nhân vật của bạn",
-            CHARACTER_MINE_USAGE: "$character mine",
-            CHARACTER_MINE_EXAMPLES: "$c me",
+            CHARACTER_MINE_USAGE: "$character mine (ID/name)",
+            CHARACTER_MINE_EXAMPLES: "$c me\n$c 110\n$c nobi",
             CHARACTER_INFO_DESCRIPTION: "Kiểm tra thông tin nhân vật",
             CHARACTER_INFO_USAGE: "$character info [name]",
             CHARACTER_INFO_EXAMPLES: "$c i nobita",
