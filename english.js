@@ -1,16 +1,16 @@
 const currentLanguage = "english",
-langCode = 'en-US'
+    langCode = 'en-US'
 c = require("../config.js"),
-e = c.emojis,
-l = c.links;
-const { clearifyNumber } = require('../helpers/utils');
+    e = c.emojis,
+    l = c.links;
+const { clearifyNumber, generateStars } = require('../helpers/utils');
 
 // This class is used to store languages strings
 
 module.exports = class {
 
     constructor() {
-            this.language = {
+        this.language = {
 
             PERM_LEVELS: [
                 "User",
@@ -20,10 +20,10 @@ module.exports = class {
                 "Ultimate",
                 "Bot owner"
             ],
-            
-            ERR_CMD_CLIENT_PERMISSIONS: (perms) => `${e.error} __**Missing permissions**__\n\nI need the following permissions for this command to work properly: ${perms.map((p) => "`"+p+"`").join(", ")}`,
+
+            ERR_CMD_CLIENT_PERMISSIONS: (perms) => `${e.error} __**Missing permissions**__\n\nI need the following permissions for this command to work properly: ${perms.map((p) => "`" + p + "`").join(", ")}`,
             ERR_CMD_USER_PERMISSIONS: (levelName, userLevel) => `${e.error} | This command requires the level of permissions \`${levelName}\` (you are \`${userLevel}\`) !`,
-            ERR_CMD_COOLDOWN: (time) => `${e.error} | Hey, keep calm! Wait **${this.convertMs(time*1000)}** before performing this command again!`,
+            ERR_CMD_COOLDOWN: (time) => `${e.error} | Hey, keep calm! Wait **${this.convertMs(time * 1000)}** before performing this command again!`,
             ERR_CMD_NSFW: `${e.error} | This command must be executed in a NSFW channel!`,
             ERR_CMD_DISABLED: `${e.error} | This command is currently disabled!`,
             ERR_OCCURRED: `${e.error} | An error has occurred. Please try again in a few minutes!`,
@@ -31,15 +31,16 @@ module.exports = class {
             ERR_CMD_MAINGUILDONLY: `${e.error} | This command is not available outside main server!`,
             ERR_CMD_INVALID_ARGS: (prefix, cmd) => `${e.error} | Invalid arguments. Type \`${prefix}help ${cmd}\` for mor details!`,
             ERR_CMD_NOT_FOUND: (cmd) => `${e.error} | Command \`${cmd}\` not found`,
-            ERR_CMD_DISABLED_CHANNEL: (cmd) => `${e.error} | Command${cmd ? " `"+ cmd + "`" : "s"} disabled for this channel`,
-            ERR_CMD_DISABLED_GUILD: (cmd) => `${e.error} | Command${cmd ? " `"+ cmd + "`" : "s"} disabled for this server`,
-            ERR_CH_COOLDOWN: (time) => `${e.error} | Hey, keep calm! Wait **${this.convertMs(time*1000)}** before chatting in this channel!`,
+            ERR_CMD_DISABLED_CHANNEL: (cmd) => `${e.error} | Command${cmd ? " `" + cmd + "`" : "s"} disabled for this channel`,
+            ERR_CMD_DISABLED_GUILD: (cmd) => `${e.error} | Command${cmd ? " `" + cmd + "`" : "s"} disabled for this server`,
+            ERR_CH_COOLDOWN: (time) => `${e.error} | Hey, keep calm! Wait **${this.convertMs(time * 1000)}** before chatting in this channel!`,
             ERR_NEXTTURN: (username) => `${e.error} | Calm down **${username}**, wait for others!`,
             ERR_INPUT_INVALID_TIME: `${e.error} | Invalid time input! Example: \`3d4h5m6s\``,
             ERR_INPUT_INVALID_DATE: `${e.error} | Invalid date input! Example: \`2020-01-31 12:00:59\``,
             ERR_INPUT_INVALID_CHARACTER: `${e.error} | Invalid character`,
-            ERR_INVALID_CHOICE: (options) => `${e.error} | Invalid choice. Try ${options.map((p) => "`"+p+"`").join(", ")}`,
+            ERR_INVALID_CHOICE: (options) => `${e.error} | Invalid choice. Try ${options.map((p) => "`" + p + "`").join(", ")}`,
             ERR_CMD_NO_USER: `${e.error} | Couldn't find user`,
+            ERR_INVALID_FIELD: (field, FIELDS) => `${e.error} | Field **${field}** not exist. Try ${FIELDS.map((p) => "`" + p + "`").join(", ")}`,
             JSON_ERR_FORMAT: `${e.error} | Invalid JSON format`,
             ERR_PERMISSION_LOWER_ROLE: `${e.error} __**Missing permissions**__\n\nI need permission \`MANAGE_ROLES\` and my role position must be high enough to do this!`,
             PREFIX_INFO: (prefix) => `${e.success} | The prefix of this server is \`${prefix}\`!`,
@@ -62,12 +63,12 @@ module.exports = class {
             HELP_TITLE: "Commands List",
             HELP_SUBTITLE: (prefix) => `Use \`${prefix}help [command]\` for more details\nNeed support? Join [Cat](${l.supportChannelInvite})`,
             HELP_HEADINGS: [
-                        "Command:",
-                        "Usage:",
-                        "Examples:",
-                        "Group:",
-                        "Description:",
-                        "Aliases:",
+                "Command:",
+                "Usage:",
+                "Examples:",
+                "Group:",
+                "Description:",
+                "Aliases:",
                 "User permissions:",
                 "Bot permissions:"
             ],
@@ -100,9 +101,9 @@ module.exports = class {
             DAILY_EXAMPLES: "$high",
             DAILY_TITLE: (username) => `${username}, let's high`,
             DAILY_TOTAL_RECEIVED: (amount) => `You received total of **${clearifyNumber(amount)} catnip**`,
-            DAILY_HIGH_STREAK: (streak) =>  `High streak (${streak})`,
+            DAILY_HIGH_STREAK: (streak) => `High streak (${streak})`,
             DAILY_HIGH_NEXT: (amount) => `Next reward: ${clearifyNumber(amount)} catnip`,
-            DAILY_VOTE_STREAK: (streak) =>  `Vote streak (${streak})`,
+            DAILY_VOTE_STREAK: (streak) => `Vote streak (${streak})`,
             DAILY_VOTE_NEXT: (min, max) => `Next vote: random ${clearifyNumber(min)} - ${clearifyNumber(max)} catnip (+250 every 5 votes)`,
             DAILY_VOTE_TIP: `Vote **Doraemon** on __**[link](${l.botVote})**__ (every 12 hours) to receive more cool rewards`,
             DAILY_PREMIUM: (point) => `Premium (${point} points)`,
@@ -135,7 +136,7 @@ module.exports = class {
             TAKE_ERR_NO_AMOUNT: `${e.error} | Missing catnip amount`,
             TAKE_ERR_USER_BOT: `${e.error} | Cannot take catnip from bot`,
             TAKE_INFO: (from, to, amount) => `**${to}** has been taken **${clearifyNumber(amount)} catnip** by **${from}**`,
-        
+
             /** CLEAN */
             CLEAN_DESCRIPTION: "clean the last 15 messages of Mon",
             CLEAN_USAGE: "$clean",
@@ -208,8 +209,7 @@ module.exports = class {
             CHANNEL_WORDWORDCHAIN_EXAMPLES: "$cn wwc",
 
             CHANNEL_RESET_SUCCESS: `${e.success} | This channel has been reset to default!`,
-            CHANNEL_ERR_INVALID_FEATURE: (FEATURES) => `${e.error} | Invalid feature! Try ${FEATURES.map((f) => "`"+f+"`").join(" ")}`,
-            CHANNEL_ERR_INVALID_FIELD: (FIELDS) => `${e.error} | Invalid field! Try ${FIELDS.map((f) => "`"+f+"`").join(" ")}`,
+            CHANNEL_ERR_INVALID_FEATURE: (FEATURES) => `${e.error} | Invalid feature! Try ${FEATURES.map((f) => "`" + f + "`").join(" ")}`,
             CHANNEL_SUCCESS: (field, feature) => `${e.success} | This channel has been set **${field}** to **${feature}**`,
             CHANNEL_ERR_USER_PERMISSIONS: `${e.error} | You don't have permission to setup this channel or feature!`,
             CHANNEL_ERR_UNSET_NOT_MATCH: (current, unset) => `${e.error} | This channel feature is \`${current}\` not \`${unset}\`. Checkout command \`reset\` to reset channel!`,
@@ -220,7 +220,7 @@ module.exports = class {
             CONFESSION_DESCRIPTION_PROVIDED: `Confession channel`,
             CONFESSION_ERR_INVALID_KEY_CHAR: `${e.error} | Invalid key. Try only one word with latin characters!`,
             CONFESSION_ERR_KEY_EXIST: (key) => `${e.error} | Key \`${key}\` already exists. Try other one!`,
-            CONFESSION_SUCCESS: (key) => `${e.success} | This channel has been set to **Confession** with key \`${key}\``, 
+            CONFESSION_SUCCESS: (key) => `${e.success} | This channel has been set to **Confession** with key \`${key}\``,
             CONFESSIONPENDING_SUCCESS: `${e.success} | This channel has been set to server's **Confession pending**`,
             CONFESSION_ERR_MISSING_CONTENT: `${e.error} | Missing content!`,
             CONFESSION_ERR_KEY_NOT_FOUND: (key) => `${e.error} | Key \`${key}\` not found.`,
@@ -235,7 +235,7 @@ module.exports = class {
             COUNTING_DESCRIPTION_PROVIDED: `Counting channel`,
             COUNTING_ERR_INVALID_MSG: (number) => `${e.error} | Ah ah, try to include \`${number}\` in your message!`,
             COUNTING_TOPIC: (number) => `Next message must include ${number}`,
-                        
+
             /* LANGUAGE */
             LANGUAGE_DESCRIPTION: "Setup language for server",
             LANGUAGE_USAGE: "$language\n$language [language]\n$language list",
@@ -262,7 +262,7 @@ module.exports = class {
             VOICECHANNEL_ERR_NOT_IN_VOICE: `${e.error} | Connect to voice channel to continue!`,
             VOICECHANNEL_CREATOR_SUCCESS: (channel) => `${e.success} | Channel **${channel}** has been set to \`voice channel creator\`. Those channels created by this channel will copy settings from it!`,
             VOICECHANNEL_STABLE_SUCCESS: (channel) => `${e.success} | Channel **${channel}** has been set to \`voice channel stable\``,
-            
+
             VOICECHANNEL_CLAIM_SUCCESS: (user, channel) => `${e.voiceChannel} | **${user}** has claimed room **${channel}**`,
             VOICECHANNEL_CLAIM_DESCRIPTION: "Claim room when the host left",
             VOICECHANNEL_CLAIM_USAGE: "$voice claim",
@@ -471,12 +471,12 @@ module.exports = class {
             GTN_HINT_LVL: (level) => `GTN hint level **${level}**`,
             GTN_HINT_LVL_HIDDEN: (level) => `GTN hint level **${level}** hidden`,
             GTN_HINT_LVL_1: (number, key) => [
-                `The key number is \`${(key % 2) ? 'odd' : 'even'}\``, 
+                `The key number is \`${(key % 2) ? 'odd' : 'even'}\``,
                 `The key number is \`${(number < key) ? 'greater' : 'not greater'}\` than \`${number}\``,
                 `The key number is \`${(number < key) ? 'greater' : 'not greater'}\` than \`${number}\``,
             ],
             GTN_HINT_LVL_2: (keyS, hintDigit, digitsSum) => [
-                `The key number has a digit \`${hintDigit}\``, 
+                `The key number has a digit \`${hintDigit}\``,
                 `The total of all digit(s) is \`${digitsSum}\``,
                 `The key number has \`${keyS.length}\` digits`,
                 `The first digit is \`${keyS.slice(0, 1)}\``,
@@ -537,7 +537,7 @@ module.exports = class {
             BLACKJACK_RESULT_BUST: "Bust",
             BLACKJACK_HIT_OR_STAND: (hit, stand) => `React ${hit} to take more card or ${stand} to finish`,
             BLACKJACK_YOUR_HAND: "Your hand",
-            BLACKJACK_LEAVE: (user, id) => `**${user}** left blackjack ID \`${id}\``, 
+            BLACKJACK_LEAVE: (user, id) => `**${user}** left blackjack ID \`${id}\``,
             BLACKJACK_NEW_ERR_MINBET: (min) => `${e.error} | Minimum bet: **${min} catnip**`,
 
             /** LIENG */
@@ -579,7 +579,7 @@ module.exports = class {
             LIENG_RESULT_ROW: "Row",
             LIENG_RESULT_ROYAL: "Royal",
             LIENG_YOUR_HAND: "Your hand",
-            LIENG_LEAVE: (user, id) => `${user} left lieng ID \`${id}\``, 
+            LIENG_LEAVE: (user, id) => `${user} left lieng ID \`${id}\``,
             LIENG_NEW_ERR_MINBET: (min) => `${e.error} | Minimum bet: **${min} catnip**`,
             LIENG_SHUFFLING: `${e.loading} | Shuffling the cards`,
             LIENG_UP_AWAIT: (game, user, min, max, time) => `**Lieng** | \`${game}\`\n${user}, your turn\nEnter the amount (min: \`${clearifyNumber(min)}\`, max: \`${clearifyNumber(max)}\`) to up or \`sur\` to surrender! (${time}s)`,
@@ -638,20 +638,8 @@ module.exports = class {
             ITEM_CREATE_SUCCESS: (name, id) => `${e.success} | Added new item **${name}**, ID: ${id}`,
             ITEM_ERR_INVALID_ID: (id) => `${e.error} | Invalid item ID: ${id}`,
             ITEM_ERR_ID_NOT_FOUND: (id) => `${e.error} | No item found with ID: ${id}`,
-            ITEM_DELETE_SUCCESS: (name, id) => `${e.success} | Removed item **${name}**, ID: ${id}`,
-            
-            ITEM_EDIT_ERR_INVALID_FIELD: (field, FIELDS) => `${e.error} | Field **${field}** not exist. Try ${FIELDS.map((p) => "`"+p+"`").join(", ")}`,
-            
-            ITEM_INFO_DESC: (desc) => `**Description**: ${desc}`,
-            ITEM_INFO_EXPIRYTIME: (time) => `**Expiry Time**: ${this.convertMs(time)}`,
-            ITEM_INFO_PRICE: (price) => `**Price**: ${clearifyNumber(price)} catnip`,
-            ITEM_INFO_STOCK: (stock) => `**Stock**: ${stock}`,
-            ITEM_INFO_QUANTITY: (quantity) => `**Quantity**: ${quantity}`,
-            ITEM_INFO_EXPIRATION: (date) => `**Expiration**: ${date}`,
-            ITEM_INFO_CLOSEAT: (date) => `**Close at**: ${date}`,
-            ITEM_INFO_OPENAT: (date) => `**Open at**: ${date}`,
-            ITEM_INFO_ID: (id) => `**ID**: ${id}`,
-
+            ITEM_DELETE_SUCCESS: (name, id) => `${e.success} | Removed item **${name}**, ID: ${id}`,            
+            ITEM_BUY_ERR_MORE_SPECIFIC: (items) => `Which one?\n${items.map((item) => "`"+item.name+"`").join(", ")}`,
             ITEM_BUY_ERR_MAX_STOCK: (max) => `${e.error} | Maximum stock at time: ${clearifyNumber(max)}`,
             ITEM_BUY_ERR_NOT_ENOUGH_STOCK: (item, stock) => `${e.error} | Not enough stock. Only **${stock}** ${item} left`,
             ITEM_BUY_ERR_ENDED: (item, date) => `${e.error} | **${item}** has stopped selling since **${date}**`,
@@ -664,19 +652,8 @@ module.exports = class {
             ITEM_LIST_TITLE: `CAT ITEMS`,
             ITEM_DETAIL_TITLE: `CAT ITEM`,
             ITEM_USER_LIST: (user) => `${user}'s Items`,
-            ITEM_ERR_INVALID_QUANTITY: (quantity) => `${e.error} | Invalid quantity: ${quantity}`,
-                  ITEM_USE_ERR_ID_NOT_FOUND: (id) => `${e.error} | You do not own any item with ID: ${id}`,
+            ITEM_USE_ERR_ID_NOT_FOUND: (id) => `${e.error} | You do not own any item with ID: ${id}`,
             ITEM_USE_SUCCESS: (user, item, quantity) => `${e.success} | **${user}** used ${quantity} x **${item}**`,
-            
-            /** GADGETS */
-            GADGET_DESCRIPTION: "Gadgets (*creating*)",
-            GADGET_USAGE: "$gadget",
-            GADGET_EXAMPLES: "$gadget",
-
-            /** WEAPONS */
-            WEAPON_DESCRIPTION: "Weapons (*creating*)",
-            WEAPON_USAGE: "$weapon",
-            WEAPON_EXAMPLES: "$weapon",
 
             /** TASK */
             TASK_DESCRIPTION: "Cat tasks and custom tasks for giveaways",
@@ -703,13 +680,12 @@ module.exports = class {
             TASK_REROLL_EXAMPLES: `$task rr daily\n$task rr long\n${e.userPremium} $task rr premium`,
 
             TASK_CREATE_ERR_MAX_CUSTOM: (max) => `You only have **${max}** custom tasks, try \`edit\` or \`remove\``,
-            TASK_CREATE_AWAIT_FORM: (forms, time) => `Please enter the type of your task (\`${time/1000}s\`)\`\`\`${forms}\`\`\``,
+            TASK_CREATE_AWAIT_FORM: (forms, time) => `Please enter the type of your task (\`${time / 1000}s\`)\`\`\`${forms}\`\`\``,
             TASK_CREATE_CANCEL: `Task adding canceled`,
-            TASK_CREATE_SUCCESS: (title, id, type, requires, options, supers) => `${e.success} | Added new task **${title}**, ID: ${id}, type: \`${type}\`. See list editable fields:\`\`\`${supers ? 'Supers: ' + supers.join(" ") +'\n' : ''}Require: ${requires.join(" ")}\nOptions: ${options.join(" ")}\`\`\``,
+            TASK_CREATE_SUCCESS: (title, id, type, requires, options, supers) => `${e.success} | Added new task **${title}**, ID: ${id}, type: \`${type}\`. See list editable fields:\`\`\`${supers ? 'Supers: ' + supers.join(" ") + '\n' : ''}Require: ${requires.join(" ")}\nOptions: ${options.join(" ")}\`\`\``,
             TASK_ERR_INVALID_ID: (id) => `${e.error} | Invalid task ID: ${id}`,
             TASK_ERR_ID_NOT_FOUND: (id) => `${e.error} | No task found with ID: ${id}`,
             TASK_DELETE_SUCCESS: (title, id) => `${e.success} | Removed task **${title}**, ID: ${id}`,
-            TASK_EDIT_ERR_INVALID_FIELD: (field, FIELDS) => `${e.error} | Field **${field}** not exist. Try \`\`\`${FIELDS}\`\`\``,
             TASK_INFO_TITLE: (title) => `**Title**: \`${title}\``,
             TASK_INFO_TIMEOUT: (time) => `**Timeout**: \`${this.convertMs(time)}\``,
             TASK_ERR_NOT_OWNER: (id) => `${e.error} | You do not own task **${id}**`,
@@ -726,19 +702,19 @@ module.exports = class {
             TASK_DESC_SEND: (channels, content, require) => `• Send \`${require}\` message(s) \`${content}\` ${channels.length ? `to channel(s) ` + channels.join(' and/or ') : ''}`,
             TASK_DESC_REACT: (emojis, link, require) => `• React emoji(s) ${emojis.length ? emojis.join(' and/or ') + ' ' : ''}to [message](${link}) for  \`${require}\` time(s)`,
             TASK_DESC_COLLECT_CATNIP: (commands, exchange, farm, require) => `• Collect \`${clearifyNumber(require)}\` catnip${commands.length ? ` by command(s) \`${commands.join('\` and/or \`')}\`` : ''}${exchange ? ` by \`exchange\`` : ''}${farm ? ` by \`farm\`` : ''}`,
-            TASK_DESC_SPEND_CATNIP: (commands,require) => `• Spend \`${clearifyNumber(require)}\` catnip${commands.length ? ` with command(s) \`${commands.join('\` and/or \`')}\`` : ''}`,
+            TASK_DESC_SPEND_CATNIP: (commands, require) => `• Spend \`${clearifyNumber(require)}\` catnip${commands.length ? ` with command(s) \`${commands.join('\` and/or \`')}\`` : ''}`,
             TASK_DESC_HAS_CATNIP: (require) => `• Has \`${clearifyNumber(require)}\` catnip`,
             TASK_DESC_MENTION: (users, require) => `• Mention user(s) ${users.length ? users.join(' and/or ') + ' ' : ''}for \`${require}\` time(s)`,
             TASK_DESC_MENTIONED: (users, require) => `• Be mentioned ${users.length ? 'by ' + users.join(' and/or ') + ' ' : ''}for \`${require}\` time(s)`,
-            TASK_DESC_COMMAND: (commands, users, require) => `• Use command(s) ${commands.length ? '\`' + commands.join('\` and/or \`') + '\`': ''} ${users.length ? 'on ' + users.join(' and/or ') + ' ' : ''}for \`${require}\` time(s)`,
-            TASK_DESC_COMMANDED: (commands, users, require) => `• Has user(s) ${users.length ? users.join(' and/or ') + ' ' : ''} used command(s) ${commands.length ? '\`' + commands.join('\` and/or \`') + '\`': ''}  on you for \`${require}\` time(s)`,
+            TASK_DESC_COMMAND: (commands, users, require) => `• Use command(s) ${commands.length ? '\`' + commands.join('\` and/or \`') + '\`' : ''} ${users.length ? 'on ' + users.join(' and/or ') + ' ' : ''}for \`${require}\` time(s)`,
+            TASK_DESC_COMMANDED: (commands, users, require) => `• Has user(s) ${users.length ? users.join(' and/or ') + ' ' : ''} used command(s) ${commands.length ? '\`' + commands.join('\` and/or \`') + '\`' : ''}  on you for \`${require}\` time(s)`,
             TASK_DESC_ROLE: (roles, guild) => `• Has role ${roles.join(' and/or ')} in server **${guild}**`,
             TASK_DESC_COLLECT_ITEM: (emoji, name, require) => `• Collect \`${(require || '').toString().padStart(2, '0')}\` **${emoji} ${name}**`,
             TASK_DESC_HAS_ITEM: (emoji, name, require) => `• Has \`${(require || '').toString().padStart(2, '0')}\` **${emoji} ${name}**`,
             TASK_DESC_HAS_GUILD: (guild, before, after) => `• Join server **${guild}**${before ? ` before \`${before}\`` : ''}${before && after ? ' and ' : ''}${after ? ` after \`${after}\`` : ''}`,
 
             TASK_DETAIL_TITLE: `TASK DETAIL`,
-            TASK_EDIT_ERR_ITEM_NO_OPTION: (OPTIONS) => `${e.error} | No option provided. Try ${OPTIONS.map((p) => "`"+p+"`").join(", ")}`,
+            TASK_EDIT_ERR_ITEM_NO_OPTION: (OPTIONS) => `${e.error} | No option provided. Try ${OPTIONS.map((p) => "`" + p + "`").join(", ")}`,
             TASK_EDIT_ERR_CMD_NOT_FOUND: (cmd) => `${e.error} | Command \`${cmd}\` not found`,
             TASK_EDIT_ERR_ITEM_MISSING_ITEMID_OR_QUANTITY: `${e.error} | Missing item ID or quantity`,
             TASK_EDIT_ERR_ITEM_INVALID_QUANTITY: (quantity) => `${e.error} | Invalid item quantity: ${quantity}`,
@@ -752,7 +728,7 @@ module.exports = class {
             INVALID_MSG_LINK: `Invalid message link`,
             TASK_USER_LIST: (user) => `${user}'s Tasks`,
             TASK_ERR_MISSING_REQUIRE_FIELD: (id, field) => `${e.error} | Task **${id}** missing required field: \`${field}\``,
-            TASK_REROLL_ERR_INVALID_TYPE: (types) => `${e.error} | Invalid task type. Try ${types.map((t) => "`"+t+"`").join(", ")}`,
+            TASK_REROLL_ERR_INVALID_TYPE: (types) => `${e.error} | Invalid task type. Try ${types.map((t) => "`" + t + "`").join(", ")}`,
             TASK_REROLL_SUCCESS: (type) => `${e.success} | Rerolled a \`${type}\` task!`,
             TASK_DONE_REWARD: (user, task, reward) => `${e.success} | **${user}**, you've finished task **${task}** and received **${reward}**`,
 
@@ -795,8 +771,8 @@ module.exports = class {
             GIVEAWAY_START_ERR_INVALID_QUANTITY: `${e.error} | Invalid number of winners`,
             GIVEAWAY_ADD_TASK_ERR_NOT_PREMIUM: `${e.error} | Giveaways with requirements only available for **Premium User**.`,
             GIVEAWAY_REACT_DESC: (emoji) => `React ${emoji} to join`,
-            GIVEAWAY_FOOTER: (quantity) => `Rolls ${quantity} win${parseInt(quantity) > 1 ? 's' :''} at`,
-            GIVEAWAY_FOOTER_ENDED: (quantity) => `Rolled ${quantity} win${parseInt(quantity) > 1 ? 's' :''} at`,
+            GIVEAWAY_FOOTER: (quantity) => `Rolls ${quantity} win${parseInt(quantity) > 1 ? 's' : ''} at`,
+            GIVEAWAY_FOOTER_ENDED: (quantity) => `Rolled ${quantity} win${parseInt(quantity) > 1 ? 's' : ''} at`,
             GIVEAWAY_NO_WINNERS: (title, link) => `Giveaway **${title}** ended, no winners\nLink: ${link}`,
             GIVEAWAY_CONGRATZ: (winners, title, link) => `Congratz ${winners}, you won the giveaway **${title}**\nLink: ${link}`,
             GIVEAWAY_CANCEL: (title, link) => `Giveaway **${title}** canceled\nLink: ${link}`,
@@ -819,19 +795,19 @@ module.exports = class {
             MEDIA_DESCRIPTION: "Random media pictures and gifs",
             MEDIA_USAGE: "$meo\n$xinh\n$food\n$meme\n$sexy\n$zai",
             MEDIA_EXAMPLES: "$meo\n$xinh\n$food\n$meme\n$sexy\n$zai",
-            
+
 
             /** UPGRADE */
             UPGRADE_DESCRIPTION: "Upgrade user/guild to premium",
             UPGRADE_USAGE: "$upgrade [target ID] [months]",
             UPGRADE_EXAMPLES: "$upgrade 436520860254470156 3\n$upgrade 511577620429668355 6",
             UPGRADE_ERR_INVALID_MONTH: `${e.error} | Invalid number of months`,
-            
+
             /** DOWNGRADE */
             DOWNGRADE_DESCRIPTION: "Downgrade user/guild from premium",
             DOWNGRADE_USAGE: "$downgrade [target ID] [months]",
             DOWNGRADE_EXAMPLES: "$downgrade 436520860254470156 1\n$downgrade 436520860254470156 1",
-            
+
             /** FEEDBACK */
             FEEDBACK_DESCRIPTION: "Send feedback, report bugs. Attach images to make it more clear!",
             FEEDBACK_USAGE: "$feedback [content]",
@@ -846,8 +822,8 @@ module.exports = class {
             ERR_NOT_PREMIUM_USER: `You need to upgrade **User Premium** to use this command with no limits. Try command \`premium\` for more details.`,
             ERR_NOT_PREMIUM_GUILD: `This server needs to upgrade **Guild Premium** so that members can use this command with no limits. Try command \`premium\` for more details.`,
             PREMIUM_STATUS_AUTHOR: (user) => `${user}'s premium status`,
-            PREMIUM_USER_DESC: (benefits, duration, point) => `**User Premium** (${duration}, ${point} points)\n${benefits.map((b) => "\t• `"+b+"`").join("\n")}`,
-            PREMIUM_GUILD_DESC: (benefits, duration) => `**Guild Premium** (${duration})\n${benefits.map((b) => "\t• `"+b+"`").join("\n")}`,
+            PREMIUM_USER_DESC: (benefits, duration, point) => `**User Premium** (${duration}, ${point} points)\n${benefits.map((b) => "\t• `" + b + "`").join("\n")}`,
+            PREMIUM_GUILD_DESC: (benefits, duration) => `**Guild Premium** (${duration})\n${benefits.map((b) => "\t• `" + b + "`").join("\n")}`,
 
             /** ROLE */
             ROLE_DESCRIPTION: "Role commands",
@@ -873,21 +849,22 @@ module.exports = class {
             COMMAND_DISABLE_DESCRIPTION: "Disable commands (or all) in current channel, commands seperated by comma `,`\nUse `--g` to disable commands in server",
             COMMAND_DISABLE_USAGE: "$command disable (--g) [command]",
             COMMAND_DISABLE_EXAMPLES: "$cmd d say, high\n$cmd d --g voice lock\n$cmd d all",
-            COMMAND_DISABLE_CMD_ALREADY: (isGuild, cmds) => `Command(s) ${cmds.map((c) => "`"+c+"`").join(", ")} disabled already in this ${isGuild ? 'server' : 'channel'}`,
-            COMMAND_DISABLE_SUCCESS: (isGuild, cmds) => `${e.success} | Disabled command(s) ${cmds.map((c) => "`"+c+"`").join(", ")} in this ${isGuild ? 'server' : 'channel'}`,
+            COMMAND_DISABLE_CMD_ALREADY: (isGuild, cmds) => `Command(s) ${cmds.map((c) => "`" + c + "`").join(", ")} disabled already in this ${isGuild ? 'server' : 'channel'}`,
+            COMMAND_DISABLE_SUCCESS: (isGuild, cmds) => `${e.success} | Disabled command(s) ${cmds.map((c) => "`" + c + "`").join(", ")} in this ${isGuild ? 'server' : 'channel'}`,
             COMMAND_DISABLE_ALL_SUCCESS: (isGuild) => `${e.success} | Disabled all commands in this ${isGuild ? 'server' : 'channel'}`,
 
             /** ENABLE */
             COMMAND_ENABLE_DESCRIPTION: "Enable commands (or all) in current channel, commands seperated by comma `,`.\nUse `--g` to enable commands in server",
             COMMAND_ENABLE_USAGE: "$command enable (--g) [command]",
             COMMAND_ENABLE_EXAMPLES: "$cmd e say, high\n$cmd e --g voice lock$cmd e all",
-            COMMAND_ENABLE_CMD_ALREADY: (isGuild, cmds) => `Command(s) \`${cmds.map((c) => "`"+c+"`").join(", ")}\` not disabled in this ${isGuild ? 'server' : 'channel'}`,
-            COMMAND_ENABLE_SUCCESS: (isGuild, cmds) => `${e.success} | Enabled command(s) \`${cmds.map((c) => "`"+c+"`").join(", ")}\` in this ${isGuild ? 'server' : 'channel'}`,
+            COMMAND_ENABLE_CMD_ALREADY: (isGuild, cmds) => `Command(s) \`${cmds.map((c) => "`" + c + "`").join(", ")}\` not disabled in this ${isGuild ? 'server' : 'channel'}`,
+            COMMAND_ENABLE_SUCCESS: (isGuild, cmds) => `${e.success} | Enabled command(s) \`${cmds.map((c) => "`" + c + "`").join(", ")}\` in this ${isGuild ? 'server' : 'channel'}`,
             COMMAND_ENABLE_ALL_SUCCESS: (isGuild) => `${e.success} | Enable all commands in this ${isGuild ? 'server' : 'channel'}`,
 
             /** BATTLE */
+
             /** CHARACTER */
-            CHARACTER_DESCRIPTION: "Claim, search, reroll and check your character",
+            CHARACTER_DESCRIPTION: "Claim, search, reroll, upgrade and check your characters",
             CHARACTER_USAGE: "$character",
             CHARACTER_EXAMPLES: "$c",
 
@@ -895,59 +872,215 @@ module.exports = class {
             CHARACTER_CLAIM_USAGE: "$character claim",
             CHARACTER_CLAIM_EXAMPLES: "$c c",
             CHARACTER_REROLL_DESCRIPTION: "Reroll a random character",
-            CHARACTER_REROLL_USAGE: "$character reroll",
-            CHARACTER_REROLL_EXAMPLES: "$c rr",
+            CHARACTER_REROLL_USAGE: "$character reroll [ID ID ID]",
+            CHARACTER_REROLL_EXAMPLES: "$c rr 23 24 25\n$c rr ",
             CHARACTER_UPGRADE_DESCRIPTION: "Upgrade your character",
-            CHARACTER_UPGRADE_USAGE: "$character upgrade [gem type] [quantity]",
-            CHARACTER_UPGRADE_EXAMPLES: "$c up index 100\n$c up skill 100\n$c up star 100", // use 100 index gem (or skill gem or star gem) 
-            CHARACTER_MINE_DESCRIPTION: "Check your character",
+            CHARACTER_UPGRADE_USAGE: "$character upgrade [type] [times]",
+            CHARACTER_UPGRADE_EXAMPLES: "$c up offensive 3",
+            CHARACTER_MINE_DESCRIPTION: "Check your characters",
             CHARACTER_MINE_USAGE: "$character mine (ID/name)",
             CHARACTER_MINE_EXAMPLES: "$c me\n$c 110\n$c nobi",
             CHARACTER_INFO_DESCRIPTION: "Check a character's info",
-            CHARACTER_INFO_USAGE: "$character info [name]",
+            CHARACTER_INFO_USAGE: "$character info [ID/name]",
             CHARACTER_INFO_EXAMPLES: "$c i nobita",
-            CHARACTER_SEARCH_DESCRIPTION: "Search character",
+            CHARACTER_SEARCH_DESCRIPTION: "Search for characters",
             CHARACTER_SEARCH_USAGE: "$character search [name]",
             CHARACTER_SEARCH_EXAMPLES: "$c ls nobi",
             CHARACTER_CREATE_DESCRIPTION: "Create a character",
             CHARACTER_CREATE_USAGE: "$character create [name]",
             CHARACTER_CREATE_EXAMPLES: "$c add nobita",
             CHARACTER_DELETE_DESCRIPTION: "Delete a character",
-            CHARACTER_DELETE_USAGE: "$character delete [name]",
-            CHARACTER_DELETE_EXAMPLES: "$c del nobita",
+            CHARACTER_DELETE_USAGE: "$character delete [ID]",
+            CHARACTER_DELETE_EXAMPLES: "$c del 1eeeeeeeeeeeeee0",
             CHARACTER_EDIT_DESCRIPTION: "Edit a character",
-            CHARACTER_EDIT_USAGE: "$character edit [name] [field] [value]",
-            CHARACTER_EDIT_EXAMPLES: "$c edit nobita spawnrate 0.5",
+            CHARACTER_EDIT_USAGE: "$character edit [ID] [field] [value]",
+            CHARACTER_EDIT_EXAMPLES: "$c edit 1eeeeeeeeeeeeeee0 spawnrate 0.5",
 
             CHARACTER_CREATE_ERR_EXIST: (name) => `${e.error} | Character **${name}** already exists!`,
             CHARACTER_CREATE_SUCCESS: (name, id) => `${e.success} | Added new character **${name}**, ID: **${id}**`,
             CHARACTER_ERR_INVALID_NAME: (name) => `${e.error} | Invalid character name: ${name}`,
             CHARACTER_ERR_NOT_FOUND: `${e.error} | Character not found`,
             CHARACTER_DELETE_SUCCESS: (name) => `${e.success} | Deleted character **${name}**`,
-            ERR_INVALID_FIELD: (field, FIELDS) => `${e.error} | Field **${field}** not exist. Try ${FIELDS.map((p) => "`"+p+"`").join(", ")}`,
             CHARACTER_NOT_FOUND: `Character not found`,
             CHARACTER_LIST_TITLE: `BATTLE CHARACTERS`,
             CHARACTER_DETAIL_TITLE: `BATTLE CHARACTER`,
-            CHARACTER_USER_LIST: (user) => `${user}'s characters`,
 
-            CHARACTER_RARE_DESCS: {
-                0: 'normal',
-                1: 'vip',
-                2: 'legend'
-            },
             CHARACTER_INFO_TYPE: "Type",
             CHARACTER_INFO_STARS: "Stars",
             CHARACTER_INFO_SPAWN_RATE: "Spawn rate",
             CHARACTER_INFO_SKILL_RATE: "Skill rate",
+            CHARACTER_INFO_PUBLIC: `Public`,
             CHARACTER_SEARCH_TITLE: (key) => `Searching characters for: ${key}`,
             CHARACTER_INFO_BASIC_INDEX: "Basic",
             CHARACTER_INFO_EXTEND_INDEX: "Extend",
-            CHARACTER_CLAIM_SUCCESS: (user, char) => `${user} has claimed a(n) ${char}`,
+            CHARACTER_CLAIM_SUCCESS: (user) => `${user} claimed a character`,
             CHARACTER_CLAIM_GUIDE: (prefix) => `Use \`${prefix}help character\` to see list actions`,
             CHARACTER_USER_LIST: (user) => `${user}'s Characters`,
             CHARACTER_REROLL_ERR_INVALID_ID: `${e.error} | Invalid character ID(s)`,
             CHARACTER_REROLL_ERR_NOT_ENOUGH: (char, count) => `${e.error} | Not enough ${count} ${char} to reroll`,
-            CHARACTER_REROLL_SUCCESS: (user, char) => `${user} has rerolled a(n) ${char}`,
+            CHARACTER_REROLL_SUCCESS: (user) => `${user} rerolled a character`,
+            CHARACTER_ID_ERR_NOT_FOUND: (ID) => `${e.error} | Character ID ${ID} not found or not enough stock to use`,
+            CHARACTER_USE_SUCCESS: (char) => `${e.success} | **${char}** has been set to your main character.`,
+            CHARACTER_USE_ALREADY: (gadget) => `**${gadget}** has already been your main character`,
+            CHARACTER_RENAME_ERR_TOO_LONG: (max) => `${e.error} | Character's nickname can not be longer than **${max}** character`,
+            CHARACTER_RENAME_SUCCESS: (nickname, name) => `${e.success} | Your **${name}** has been named **${nickname}**`,
+
+            /** GEM */
+            GEM_DESCRIPTION: "Search, sell and check your gems",
+            GEM_USAGE: "$gem",
+            GEM_EXAMPLES: "$g",
+
+            GEM_SELL_DESCRIPTION: "Sell your gems",
+            GEM_SELL_USAGE: "$character sell [ID] [quantity]",
+            GEM_SELL_EXAMPLES: "$g sell 3 30",
+            GEM_MINE_DESCRIPTION: "Check your gems",
+            GEM_MINE_USAGE: "$gem mine (ID/name)",
+            GEM_MINE_EXAMPLES: "$g me\n$g 110\n$g nobi",
+            GEM_INFO_DESCRIPTION: "Check a gem's info",
+            GEM_INFO_USAGE: "$gem info [ID/name]",
+            GEM_INFO_EXAMPLES: "$g i offensive",
+            GEM_SEARCH_DESCRIPTION: "Search for gems",
+            GEM_SEARCH_USAGE: "$gem search [name]",
+            GEM_SEARCH_EXAMPLES: "$g ls off",
+            GEM_CREATE_DESCRIPTION: "Create a gem",
+            GEM_CREATE_USAGE: "$gem create [name]",
+            GEM_CREATE_EXAMPLES: "$g add Raw buff Offensive",
+            GEM_DELETE_DESCRIPTION: "Delete a gem",
+            GEM_DELETE_USAGE: "$gem delete [ID]",
+            GEM_DELETE_EXAMPLES: "$g del 1eeeeeeeeeeeeeeeee0",
+            GEM_EDIT_DESCRIPTION: "Edit a gem",
+            GEM_EDIT_USAGE: "$gem edit [ID] [field] [value]",
+            GEM_EDIT_EXAMPLES: "$g edit 1eeeeeeeeeeeeeee0 index 25",
+
+            GEM_CREATE_ERR_EXIST: (name) => `${e.error} | Gem **${name}** already exists!`,
+            GEM_CREATE_SUCCESS: (name, id) => `${e.success} | Added new gem **${name}**, ID: **${id}**`,
+            GEM_ERR_NOT_FOUND: `${e.error} | Gem not found`,
+            GEM_DELETE_SUCCESS: (name) => `${e.success} | Deleted gem **${name}**`,
+            GEM_NOT_FOUND: `Gem not found`,
+            GEM_LIST_TITLE: `BATTLE GEMS`,
+            GEM_DETAIL_TITLE: `BATTLE GEM`,
+            GEM_INFO_SELL_PRICE: "Sell",
+            GEM_INFO_TYPE: "Type",
+            GEM_INFO_SPAWN_RATE: "Spawn rate",
+            GEM_INFO_PUBLIC: "Public",
+            GEM_INFO_INDEX: "Bonus index",
+            GEM_SEARCH_TITLE: (key) => `Searching gems for: ${key}`,
+            GEM_USER_LIST: (user) => `${user}'s Gems`,
+            GEM_SELL_ERR_INVALID_ID: `${e.error} | Invalid gem ID(s)`,
+            GEM_SELL_ERR_NOT_ENOUGH: `${e.error} | Not enough gems to sell`,
+            GEM_SELL_ERR_TYPE_INVALID: `${e.error} | Invalid gem type(s)`,
+            GEM_SELL_TYPE_SUCCESS: (user, sells, total) => `${e.success} | **${user}** sold ${Object.keys(sells).map((type) => e.gemType[type] + "**x" + clearifyNumber(sells[type]) + "**").join(", ")} for total of **${clearifyNumber(total)}** ${e.dorayaki}`,
+            GEM_SELL_ID_SUCCESS: (user, uGem, quantity, price) => `${e.success} | **${user}** sold **${clearifyNumber(quantity)}** x ${e.gemType[uGem.gem.type]} **${uGem.gem.name}** for **${clearifyNumber(price)}** ${e.dorayaki}`,
+      
+            GEM_ID_ERR_NOT_FOUND: (ID) => `${e.error} | Gem ID ${ID} not found or not enough stock`,
+            GEM_EQUIP_SUCCESS: (gem) => `${e.success} | **${gem}** has been equiped`,
+            GEM_EQUIP_ERR_MAX: (max) => `${e.error} | Your **${max}** gem positions has been filled, try to \`unequip\` first`,
+            GEM_EQUIP_ALREADY: (gem) => `${e.error} | **${gem}** has already equiped`,
+            GEM_UNEQUIP_NOT_EQUIP: (gem) => `${e.error} | **${gem}** hasn't equiped yet`,
+            GEM_UNEQUIP_SUCCESS: (gem) => `${e.success} | **${gem}** has been unequiped`,
+
+            /** GADGET */
+            GADGET_DESCRIPTION: "Search, sell, combine, equip, upgrade and check your gadgets",
+            GADGET_USAGE: "$gadget",
+            GADGET_EXAMPLES: "$g",
+
+            GADGET_COMBINE_DESCRIPTION: "Combine your 4 gadgets and get higher star gadget",
+            GADGET_COMBINE_USAGE: "$gadget combine [ID] [quantity]",
+            GADGET_COMBINE_EXAMPLES: "$g rr 23 all",
+            GADGET_UPGRADE_DESCRIPTION: "Upgrade your gadget",
+            GADGET_UPGRADE_USAGE: "$gadget upgrade [type] [times]",
+            GADGET_UPGRADE_EXAMPLES: "$g up offensive 3",
+            GADGET_MINE_DESCRIPTION: "Check your gadgets",
+            GADGET_MINE_USAGE: "$gadget mine (ID/name)",
+            GADGET_MINE_EXAMPLES: "$g me\n$g 110\n$g defense",
+            GADGET_INFO_DESCRIPTION: "Check a gadget's info",
+            GADGET_INFO_USAGE: "$gadget info [ID/name]",
+            GADGET_INFO_EXAMPLES: "$g i Raw Defense Buff",
+            GADGET_SEARCH_DESCRIPTION: "Search for gadgets",
+            GADGET_SEARCH_USAGE: "$gadget search [name]",
+            GADGET_SEARCH_EXAMPLES: "$g ls def",
+            GADGET_CREATE_DESCRIPTION: "Create a gadget",
+            GADGET_CREATE_USAGE: "$gadget create [name]",
+            GADGET_CREATE_EXAMPLES: "$g add Raw Defense Buff",
+            GADGET_DELETE_DESCRIPTION: "Delete a gadget",
+            GADGET_DELETE_USAGE: "$gadget delete [ID]",
+            GADGET_DELETE_EXAMPLES: "$g del 1eeeeeeeeeeeeee0",
+            GADGET_EDIT_DESCRIPTION: "Edit a gadget",
+            GADGET_EDIT_USAGE: "$gadget edit [ID] [field] [value]",
+            CHARACTER_EDIT_EXAMPLES: "$c edit 1eeeeeeeeeeeeeee0 skillflags BONUS_1_TURN FIRE_ALL_ENEMIES",
+
+            GADGET_CREATE_ERR_EXIST: (name) => `${e.error} | Gadget **${name}** already exists!`,
+            GADGET_CREATE_SUCCESS: (name, id) => `${e.success} | Added new gadget **${name}**, ID: **${id}**`,
+            GADGET_ERR_NOT_FOUND: `${e.error} | Gadget not found`,
+            GADGET_DELETE_SUCCESS: (name) => `${e.success} | Deleted gadget **${name}**`,
+            GADGET_NOT_FOUND: `Gadget not found`,
+            GADGET_LIST_TITLE: `BATTLE GADGETS`,
+            GADGET_DETAIL_TITLE: `BATTLE GADGET`,
+            GADGET_INFO_SELL_PRICE: "Sell",
+            GADGET_INFO_TYPE: "Type",
+            GADGET_INFO_SPAWN_RATE: "Spawn rate",
+            GADGET_INFO_SKILL_RATE: "Skill rate",
+            GADGET_INFO_PUBLIC: "Public",
+            GADGET_SEARCH_TITLE: (key) => `Searching gadgets for: ${key}`,
+            GADGET_USER_LIST: (user) => `${user}'s Gadgets`,
+            GADGET_SELL_ERR_INVALID_ID: `${e.error} | Invalid gadget ID(s)`,
+            GADGET_SELL_ERR_NOT_ENOUGH: `${e.error} | Not enough gadgets to sell`,
+            GADGET_SELL_ERR_TYPE_INVALID: `${e.error} | Invalid gadget type(s)`,
+            GADGET_SELL_TYPE_SUCCESS: (user, sells, total) => `${e.success} | **${user}** sold ${Object.keys(sells).map((type) => e.gadgetType[type] + "**x" + clearifyNumber(sells[type]) + "**").join(", ")} for total of **${clearifyNumber(total)}** ${e.dorayaki}`,
+            GADGET_SELL_ID_SUCCESS: (user, uGadget, quantity, price) => `${e.success} | **${user}** sold **${clearifyNumber(quantity)}** x ${e.gadgetType[uGadget.gadget.type]} **${uGadget.gadget.name}** ${generateStars(uGadget.star, e.star)} for **${clearifyNumber(price)}** ${e.dorayaki}`,
+            GADGET_COMBINE_ERR_NOT_ENOUGH: (gadget) => `${e.error} | Not enough **${gadget}** to combine`,
+            GADGET_COMBINE_ERR_MAX: (gadget, max) => `${e.error} | Your **${gadget}** has reached the maximum **${max}** star`,
+            GADGET_COMBINE_SUCCESS: (user, uGadget, quantity) => `${e.success} | **${user}** has combined sucessfully **${clearifyNumber(quantity)}** x ${e.gadgetType[uGadget.gadget.type]} **${uGadget.gadget.name}** ${generateStars(uGadget.star+1, e.star)}`,
+            GADGET_INFO_EXTEND_INDEX: "Extend",
+            GADGET_INFO_BASIC_INDEX: "Basic",
+            GADGET_INFO_SKILL: "Skills",
+            GADGET_SKILL_DESC: {
+                'BONUS_1_TURN': "Get bonus 1 turn"
+            },
+
+            GADGET_ID_ERR_NOT_FOUND: (ID) => `${e.error} | Gadget ID ${ID} not found or not enough stock`,
+            GADGET_EQUIP_SUCCESS: (gadget) => `${e.success} | **${gadget}** has been equiped`,
+            GADGET_EQUIP_ERR_MAX: (max) => `${e.error} | Your **${max}** gadget positions has been filled, try to \`unequip\` first`,
+            GADGET_EQUIP_ALREADY: (gadget) => `${e.error} | **${gadget}** has already equiped`,
+            GADGET_UNEQUIP_NOT_EQUIP: (gadget) => `${e.error} | **${gadget}** hasn't equiped yet`,
+            GADGET_UNEQUIP_SUCCESS: (gadget) => `${e.success} | **${gadget}** has been unequiped`,
+
+            /** WEAPON */
+            WEAPON_CREATE_ERR_EXIST: (name) => `${e.error} | Gadget **${name}** already exists!`,
+            WEAPON_CREATE_SUCCESS: (name, id) => `${e.success} | Added new gadget **${name}**, ID: **${id}**`,
+            WEAPON_ERR_INVALID_NAME: (name) => `${e.error} | Invalid gadget name: ${name}`,
+            WEAPON_ERR_NOT_FOUND: `${e.error} | Gadget not found`,
+            WEAPON_DELETE_SUCCESS: (name) => `${e.success} | Deleted gadget **${name}**`,
+            WEAPON_NOT_FOUND: `Gadget not found`,
+            WEAPON_LIST_TITLE: `BATTLE GADGETS`,
+            WEAPON_DETAIL_TITLE: `BATTLE GADGET`,
+            WEAPON_INFO_SELL_PRICE: "Sell",
+            WEAPON_INFO_TYPE: "Type",
+            WEAPON_INFO_SPAWN_RATE: "Spawn rate",
+            WEAPON_INFO_SKILL_RATE: "Skill rate",
+            WEAPON_INFO_PUBLIC: "Public",
+            WEAPON_SEARCH_TITLE: (key) => `Searching gadgets for: ${key}`,
+            WEAPON_USER_LIST: (user) => `${user}'s Gadgets`,
+            WEAPON_SELL_ERR_INVALID_ID: `${e.error} | Invalid gadget ID(s)`,
+            WEAPON_SELL_ERR_NOT_ENOUGH: `${e.error} | Not enough gadgets to sell`,
+            WEAPON_SELL_ERR_TYPE_INVALID: `${e.error} | Invalid gadget type(s)`,
+            WEAPON_SELL_TYPE_SUCCESS: (user, sells, total) => `${e.success} | **${user}** sold ${Object.keys(sells).map((type) => e.gadgetType[type] + "**x" + clearifyNumber(sells[type]) + "**").join(", ")} for total of **${clearifyNumber(total)}** ${e.dorayaki}`,
+            WEAPON_SELL_ID_SUCCESS: (user, uGadget, quantity, price) => `${e.success} | **${user}** sold **${clearifyNumber(quantity)}** x ${e.gadgetType[uGadget.gadget.type]} **${uGadget.gadget.name}** ${generateStars(uGadget.star, e.star)} for **${clearifyNumber(price)}** ${e.dorayaki}`,
+            WEAPON_COMBINE_ERR_NOT_ENOUGH: (gadget) => `${e.error} | Not enough **${gadget}** to combine`,
+            WEAPON_COMBINE_ERR_MAX: (gadget, max) => `${e.error} | Your **${gadget}** has reached the maximum **${max}** star`,
+            WEAPON_COMBINE_SUCCESS: (user, uGadget, quantity) => `${e.success} | **${user}** has combined sucessfully **${clearifyNumber(quantity)}** x ${e.gadgetType[uGadget.gadget.type]} **${uGadget.gadget.name}** ${generateStars(uGadget.star+1, e.star)}`,
+            WEAPON_INFO_EXTEND_INDEX: "Extend",
+            WEAPON_INFO_BASIC_INDEX: "Basic",
+            WEAPON_SKILL_DESC: {
+                'BONUS_1_TURN': "Get bonus 1 turn"
+            },
+
+            WEAPON_ID_ERR_NOT_FOUND: (ID) => `${e.error} | Gadget ID ${ID} not found or not enough stock`,
+            WEAPON_EQUIP_SUCCESS: (gadget) => `${e.success} | **${gadget}** has been equiped`,
+            WEAPON_EQUIP_ERR_MAX: (max) => `${e.error} | Your **${max}** gadget positions has been filled, try to \`unequip\` first`,
+            WEAPON_EQUIP_ALREADY: (gadget) => `${e.error} | **${gadget}** has already equiped`,
+            WEAPON_UNEQUIP_NOT_EQUIP: (gadget) => `${e.error} | **${gadget}** hasn't equiped yet`,
+            WEAPON_UNEQUIP_SUCCESS: (gadget) => `${e.success} | **${gadget}** has been unequiped`,
 
             /* COMMON WORDS */
             ID_NOT_FOUND: (id) => `ID **${id}** not found`,
@@ -984,7 +1117,20 @@ module.exports = class {
             TYPE: "Type",
             STOCK: "Stock",
             LEVEL: "Level",
-            EXPIRATION: "Expiration"
+            EXPIRATION: "Expiration",
+            EXPIRYTIME: "Expiry time",
+            STAR: "Star",
+            FOREVER: "Forever",
+            INFINITY: "Infinity",
+            OPEN_AT: "Open at",
+            CLOSE_AT: "Close at",
+            SPAWN_RATE: "Spawn rate",
+            SKILL_RATE: "Skill rate",
+            BASIC: "Basic",
+            EXTEND: "Extend",
+
+            /** CONVERT MS */
+            convertMs: (ms) => this.convertMs(ms)
         }
     }
 
@@ -994,64 +1140,64 @@ module.exports = class {
        * @param {...*} args Any arguments to pass to the lookup
        * @returns {string|Function}
        */
-      get(term, ...args) {
-            const value = this.language[term];
-            switch (typeof value) {
-                  case "function": return value(...args);
-                  default: return value;
-            }
-      }
+    get(term, ...args) {
+        const value = this.language[term];
+        switch (typeof value) {
+            case "function": return value(...args);
+            default: return value;
+        }
+    }
 
-      getLang(){
-            return currentLanguage;
+    getLang() {
+        return currentLanguage;
     }
 
     getLangCode() {
         return langCode;
     }
 
-      printDate(pdate, isLongDate){
-        const monthNames = [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
+    printDate(pdate, isLongDate) {
+        const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
         let day = pdate.getDate(),
-        monthIndex = pdate.getMonth(),
-        year = pdate.getFullYear(),
-        hour = pdate.getHours() < 10 ? "0" + pdate.getHours() : pdate.getHours(),
-        minute = pdate.getMinutes() < 10 ? "0" + pdate.getMinutes() : pdate.getMinutes();
+            monthIndex = pdate.getMonth(),
+            year = pdate.getFullYear(),
+            hour = pdate.getHours() < 10 ? "0" + pdate.getHours() : pdate.getHours(),
+            minute = pdate.getMinutes() < 10 ? "0" + pdate.getMinutes() : pdate.getMinutes();
 
-        let thedate = (isLongDate) ? day + " " + monthNames[monthIndex] + " " + year + " at " + hour + "h" + minute 
-        : day + " " + monthNames[monthIndex] + " " + year
+        let thedate = (isLongDate) ? day + " " + monthNames[monthIndex] + " " + year + " at " + hour + "h" + minute
+            : day + " " + monthNames[monthIndex] + " " + year
         return thedate;
-      }
-      
-      /**
-       * Parse ms and returns a string
-       * @param {number} milliseconds The amount of milliseconds
-       * @returns The parsed milliseconds
-       */
-      convertMs(milliseconds, allowZero){
-            let roundTowardsZero = milliseconds > 0 ? Math.floor : Math.ceil;
-            let days = roundTowardsZero(milliseconds / 86400000),
+    }
+
+    /**
+     * Parse ms and returns a string
+     * @param {number} milliseconds The amount of milliseconds
+     * @returns The parsed milliseconds
+     */
+    convertMs(milliseconds) {
+        let roundTowardsZero = milliseconds > 0 ? Math.floor : Math.ceil;
+        let days = roundTowardsZero(milliseconds / 86400000),
             hours = roundTowardsZero(milliseconds / 3600000) % 24,
             minutes = roundTowardsZero(milliseconds / 60000) % 60,
             seconds = roundTowardsZero(milliseconds / 1000) % 60;
-            // if(seconds === 0 && !allowZero) seconds++;
-            let isDays = days > 0,
+        // if(seconds === 0 && !allowZero) seconds++;
+        let isDays = days > 0,
             isHours = hours > 0,
-        isMinutes = minutes > 0,
-        isSeconds = seconds > 0;
-            let pattern = 
-        (!isDays ? "" : "{days}D ")+
-        (!isHours ? "" : "{hours}H ")+
-        (!isMinutes ? "" : "{minutes}M ")+
-        (!isSeconds ? "" : (!isDays && !isHours && !isMinutes ? "{seconds}s" : "{seconds}S"))
+            isMinutes = minutes > 0,
+            isSeconds = seconds > 0;
+        let pattern =
+            (!isDays ? "" : "{days}D ") +
+            (!isHours ? "" : "{hours}H ") +
+            (!isMinutes ? "" : "{minutes}M ") +
+            (!isSeconds ? "" : (!isDays && !isHours && !isMinutes ? "{seconds}s" : "{seconds}S"))
 
-            let sentence = pattern
-        .replace("{duration}", pattern)
-        .replace("{days}", days)
-        .replace("{hours}", hours)
-        .replace("{minutes}", minutes)
-        .replace("{seconds}", seconds);
-            return sentence.trim();
-      }
+        let sentence = pattern
+            .replace("{duration}", pattern)
+            .replace("{days}", days)
+            .replace("{hours}", hours)
+            .replace("{minutes}", minutes)
+            .replace("{seconds}", seconds);
+        return sentence.trim();
+    }
 
 }
