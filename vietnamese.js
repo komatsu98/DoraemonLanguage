@@ -10,7 +10,7 @@ const { clearifyNumber } = require('../helpers/utils');
 module.exports = class {
 
     constructor() {
-		this.language = {
+            this.language = {
 
             PERM_LEVELS: [
                 "User",
@@ -62,12 +62,12 @@ module.exports = class {
             HELP_TITLE: "Commands List",
             HELP_SUBTITLE: (prefix) => `Use \`${prefix}help [command]\` để biết thêm chi tiết\nCần hỗ trợ? Hãy tham gia máy chủ của chúng tôi [Cat](${l.supportChannelInvite})`,
             HELP_HEADINGS: [
-				"Command:",
-				"Usage:",
-				"Examples:",
-				"Group:",
-				"Description:",
-				"Aliases:",
+                        "Command:",
+                        "Usage:",
+                        "Examples:",
+                        "Group:",
+                        "Description:",
+                        "Aliases:",
                 "User permissions:",
                 "Bot permissions:"
             ],
@@ -89,7 +89,7 @@ module.exports = class {
             /* CATNIP */
             CATNIP_ERR_NOT_ENOUGH: `${e.error} | Không đủ catnip`,
             ERR_INVALID_AMOUNT: `${e.error} | Số catnip không hợp lệ`,
-            NIP_DESCRIPTION: "kiểm tra số catnip của bạn",
+            NIP_DESCRIPTION: "Kiểm tra số catnip của bạn",
             NIP_USAGE: "$nip",
             NIP_EXAMPLES: "$nip",
             NIP_CHECK: (username, amount) => `**${username}**, Bạn có **${clearifyNumber(amount)} catnip**`,
@@ -120,7 +120,7 @@ module.exports = class {
 
             /* ADD */
             ADD_DESCRIPTION: "add catnip",
-            ADD_USAGE: "$add [@user> <amount]",
+            ADD_USAGE: "$add [@user] [amount]",
             ADD_EXAMPLES: "$add @Komatsu 100",
             ADD_ERR_NO_USER: `${e.error} | Missing user`,
             ADD_ERR_NO_AMOUNT: `${e.error} | Missing catnip amount`,
@@ -135,12 +135,17 @@ module.exports = class {
             TAKE_ERR_NO_AMOUNT: `${e.error} | Missing catnip amount`,
             TAKE_ERR_USER_BOT: `${e.error} | Cannot take catnip from bot`,
             TAKE_INFO: (from, to, amount) => `**${to}** has been taken **${clearifyNumber(amount)} catnip** by **${from}**`,
-        
+
+            /** CLEAN */
+            CLEAN_DESCRIPTION: "Xóa 15 tin nhắn cuối cùng của Doraemon",
+            CLEAN_USAGE: "$clean",
+            CLEAN_EXAMPLES: "$cl",
+
             /** LEADERBOARD */
-            LEADERBOARD_DESCRIPTION: " Bảng xếp hạng toàn hệ thống : catnip, battle streak, power,...",
+            LEADERBOARD_DESCRIPTION: " Bảng xếp hạng : catnip, battle streak, power,...",
             LEADERBOARD_USAGE: "$leaderboard [category] [limit]",
             LEADERBOARD_EXAMPLES: "$lb catnip 10",
-            LEADERBOARD_CATNIP_TITLE: "Bảng xếp hạng toàn hệ thống ",
+            LEADERBOARD_CATNIP_TITLE: "Bảng xếp hạng ",
             LEADERBOARD_FOOTER: (rank) => `Rank của bạn: ${rank}`,
             /**
             * Feature Channels
@@ -378,44 +383,44 @@ module.exports = class {
             SPEAK_ERR_NOT_VIEWABLE: (channel) => `${e.error} | Thiếu quyền \`VIEW_CHANNEL\` với kênh **${channel}**`,
             SPEAK_ERR_NOT_JOINABLE: (channel) => `${e.error} | Bot không thể vào kênh **${channel}**`,
             SPEAK_ERR_NOT_SPEAKABLE: (channel) => `${e.error} | Doraemon không thể nói tại  **${channel}**`,
-            SPEAK_ERR_TOO_LONG: (max) => `${e.error} | Doraemon không thể nói quá **${max}** từ ! Nâng cấp lên premium để bỏ giới hạn !`,
+            SPEAK_ERR_TOO_LONG: (max, guildPre) => `${e.error} | Tối đa **${max}** từ trong một câu${guildPre ? " trong **Premium Guild**" : ""}!`,
 
             /** LEVEL */
-            LEVEL_DESCRIPTION: "Level, rank, rewards",
-            LEVEL_REWARD_DESCRIPTION: "Add/remove level reward as role",
+            LEVEL_DESCRIPTION: "Cấp, thứ hạng, phần thưởng",
+            LEVEL_REWARD_DESCRIPTION: "Thêm / xóa phần thưởng cấp cho từng role",
             LEVEL_REWARD_USAGE: "$level reward add [@role] [level] (description)\n$level reward remove [@role]",
             LEVEL_REWARD_EXAMPLES: "$lvl rw add @starter 5 Change nickname is unlocked\n$lvl rw remove @starter",
-            LEVEL_DISABLE_DESCRIPTION: "Disable level for server",
+            LEVEL_DISABLE_DESCRIPTION: "Vô hiệu hóa tính cấp cho server",
             LEVEL_DISABLE_USAGE: "$level disable",
             LEVEL_DISABLE_EXAMPLES: "$lvl disable",
-            LEVEL_ENABLE_DESCRIPTION: "Enable level for server",
+            LEVEL_ENABLE_DESCRIPTION: "Kích hoạt tính cấp cho server",
             LEVEL_ENABLE_USAGE: "$level enable",
             LEVEL_ENABLE_EXAMPLES: "$lvl enable",
-            LEVEL_MESSAGE_DESCRIPTION: "Edit level-up message",
+            LEVEL_MESSAGE_DESCRIPTION: "Chỉnh sửa tin nhắn khi lên cấp",
             LEVEL_MESSAGE_USAGE: "$level message [content]",
             LEVEL_MESSAGE_EXAMPLES: "$lvl msg Congratz {user}, you've reached level {level}!",
-            LEVEL_NOXP_DESCRIPTION: "Set no-xp role",
+            LEVEL_NOXP_DESCRIPTION: "Role no-xp",
             LEVEL_NOXP_USAGE: "$level noxp [@role]",
             LEVEL_NOXP_EXAMPLES: "$lvl noxp @No-xp",
-            LEVEL_RESET_DESCRIPTION: "Reset members xp",
+            LEVEL_RESET_DESCRIPTION: "Đặt lại xp của thành viên ",
             LEVEL_RESET_USAGE: "$level reset all\n$lvl reset [@user]",
             LEVEL_RESET_EXAMPLES: "$lvl rs all\n$lvl rs @komatsu#7447 @ustamok#3010",
-            LEVEL_SETXP_DESCRIPTION: "Custom channel xp range. Use `--g` for server custom",
+            LEVEL_SETXP_DESCRIPTION: "Kênh xp tùy chỉnh. Sử dụng `--g` cho xp tùy chỉnh server",
             LEVEL_SETXP_USAGE: "$level setxp (--g) [min] [max]",
             LEVEL_SETXP_EXAMPLES: "$level setxp 10 20\n$level setxp --g 10 20",
-            LEVEL_UPDATE_DESCRIPTION: "Update missing role reward for members",
+            LEVEL_UPDATE_DESCRIPTION: "Cập nhật phần thưởng và role còn thiếu cho thành viên",
             LEVEL_UPDATE_USAGE: "$level update",
             LEVEL_UPDATE_EXAMPLES: "$lvl update",
-            LEVEL_LEADERBOARD_DESCRIPTION: "Show leaderboard",
+            LEVEL_LEADERBOARD_DESCRIPTION: "Kiểm tra bảng xếp hạng",
             LEVEL_LEADERBOARD_USAGE: "$level leaderboard",
             LEVEL_LEADERBOARD_EXAMPLES: "$lvl lb",
-            LEVEL_RANK_DESCRIPTION: "Check rank",
+            LEVEL_RANK_DESCRIPTION: "Kiểm tra thứ hạng",
             LEVEL_RANK_USAGE: "$level rank\n$level rank [user]",
             LEVEL_RANK_EXAMPLES: "$lvl rank\n$lvl rank 436520860254470156",
-            LEVEL_REWARDS_DESCRIPTION: "Show rewards",
+            LEVEL_REWARDS_DESCRIPTION: "Hiển thị phần thưởng",
             LEVEL_REWARDS_USAGE: "$level rewards",
             LEVEL_REWARDS_EXAMPLES: "$lvl rws",
-            LEVEL_INFO_DESCRIPTION: "Show level settings",
+            LEVEL_INFO_DESCRIPTION: "Hiển thị cài đặt cấp",
             LEVEL_INFO_USAGE: "$level info",
             LEVEL_INFO_EXAMPLES: "$lvl i",
             LEVEL_TOGGLEREMOVEROLE_DESCRIPTION: `Toggle remove lower role rewards`,
@@ -423,12 +428,12 @@ module.exports = class {
             LEVEL_TOGGLEREMOVEROLE_EXAMPLES: "$lvl trr",
 
             LEVEL_TOGGLEREMOVEROLE_SUCCESS: (newState) => `${e.success} | Đã loại bỏ các role thấp hơn : **${newState}**`,
-            LEVEL_ERR_REWARD_INVALID: "Level reward không hợp lệ",
+            LEVEL_ERR_REWARD_INVALID: "Phần thưởng không hợp lệ",
             LEVEL_ERR_REWARD_ROLE_NOT_FOUND: (key) => `Role với ID \`${key}\` Không còn tồn tại.\nĐang gỡ các phần thưởng cho bạn...`,
             LEVEL_ERR_ADDROLE_PERMISSION: (role, user, guild) => `Doraemon không đủ quyền để gắn **${role}** cho **${user}** tại **${guild}**.`,
             LEVEL_UP_TITLE: "LEVEL UP!",
             LEVEL_FIX_TITLE: "LEVEL FIX!",
-            LEVEL_UP_DESC: (member, lvl) => `**${member}** đã lên cấp **${lvl}** cố gắng cào phím để nhận thêm nhiều phần thưởng hấp dẫn hơn nha!`,
+            LEVEL_UP_DESC: (member, lvl) => `**${member}** đã lên cấp, **${lvl}** cố gắng cào phím để nhận thêm nhiều phần thưởng hấp dẫn hơn nha!`,
             LEVEL_LEADERBOARD_TITLE: (guild) => `${guild}'s Level Leaderboard`,
             LEVEL_REWARDS_TITLE: (guild) => `${guild}'s Level Rewards`,
             LEVEL_INFO_TITLE: (guild) => `${guild}'s Level Info`,
@@ -461,7 +466,7 @@ module.exports = class {
             GTN_EXAMPLES: "$gtn auto (toggle auto mode)\n$gtn 50\n50 (in auto-mode)\n$gtn info",
             GTN_WIN: (user, reward) => `BINGOOOOOOOOO!!!! Chúc mừng **${user}** đã đoán đúng số` + (reward ? ` và nhận được **${clearifyNumber(reward)} catnip**` : '.'),
             GTN_TOGGLE_AUTOMODE: (auto) => `${e.success} | GTN auto: **${auto ? 'ON' : 'OFF'}**`,
-            GTN_ERR_OUTTURN: `${e.error} | Bạn đã hết lượt , hãy đợi các game tiếp theo!`,
+            GTN_ERR_OUTTURN: `${e.error} | Bạn đã hết lượt, hãy đợi các game tiếp theo!`,
             GTN_HINT_LVL: (level) => `Gợi ý cấp **${level}**`,
             GTN_HINT_LVL_HIDDEN: (level) => `Gợi ý cấp **${level}** đã ẩn`,
             GTN_HINT_LVL_1: (number, key) => [
@@ -482,7 +487,7 @@ module.exports = class {
             BAUCUA_DESCRIPTION: "Game Baucua. Chọn: `tom`, `ga`, `nai`, `ca`, `bau`, `cua`",
             BAUCUA_USAGE: "$baucua [đặt] (chọn)",
             BAUCUA_EXAMPLES: "$bc 5000\n$bc all tom",
-            BAUCUA_START_TITLE: "Baucua bắt đầu",
+            BAUCUA_START_TITLE: " Bắt đầu lắc",
             BAUCUA_COUNTDOWN: (time) => `kết thúc vào ${this.convertMs(time)}`,
             BAUCUA_END_TITLE: "Baucua Ended",
             BAUCUA_BET_DESCRIPTION: (user, amount, choice) => `**${user}** đã đặt **${clearifyNumber(amount)} catnip** vào **${choice}**`,
@@ -507,7 +512,7 @@ module.exports = class {
             BLACKJACK_START_DESCRIPTION: "Bắt đầu game",
             BLACKJACK_START_USAGE: "$blackjack start [ID]",
             BLACKJACK_START_EXAMPLES: "$bj s 1011",
-            BLACKJACK_INFO_DESCRIPTION: "Thông tin Game",
+            BLACKJACK_INFO_DESCRIPTION: "Thông tin game",
             BLACKJACK_INFO_USAGE: "$blackjack info [ID]",
             BLACKJACK_INFO_EXAMPLES: "$bj i 1011",
             BLACKJACK_LEAVE_DESCRIPTION: "Thoát game hiện tại",
@@ -565,7 +570,7 @@ module.exports = class {
             LIENG_LIST_TITLE: (guild) => `${guild}'s lieng games`,
             LIENG_MINE_TITLE: (user) => `${user}'s lieng games`,
             LIENG_ERR_GAME_NOT_FOUND: "Game không tồn tại",
-            LIENG_LIST_NO_GAME: `Không có game đang chờ , hãy tạo game mới`,
+            LIENG_LIST_NO_GAME: `Không có game đang chờ, hãy tạo game mới`,
             LIENG_START_ERR_NOT_HOST: `Chỉ người tạo game mới có thể bắt đầu!`,
             LIENG_START_ERR_ALONE: `Bạn không thể chơi game một mình!`,
             LIENG_END: "Lieng kết thúc",
@@ -583,7 +588,7 @@ module.exports = class {
             LIENG_UP_DESC: (user, amount) => `**${user}** tố thêm **${clearifyNumber(amount)}**`,
 
             /** AVATAR */
-            AVATAR_DESCRIPTION: "Show user avatar",
+            AVATAR_DESCRIPTION: "Xem ảnh đại diện của người dùng",
             AVATAR_USAGE: "$avatar [search]",
             AVATAR_EXAMPLES: "$avt @komatsu#7447\n$avt komatsu\n$avt 436520860254470156\n$avt koma\n$avt 7447",
             AVATAR_SEARCH_TITLE: (key) => `Đang tìm : ${key}`,
@@ -595,7 +600,7 @@ module.exports = class {
             INVISIBLE_EXAMPLES: "$invi",
 
             /** INVISIBLE */
-            PICK_DESCRIPTION: "Pick from options (serprate by `,`) or max",
+            PICK_DESCRIPTION: "Chọn từ các tùy chọn (cách nhau bởi `,`) hoặc tối đa",
             PICK_USAGE: "$pick [option_1, option_2,...]\n$pick [max]",
             PICK_EXAMPLES: "$pick a,b,c\n$pick 999",
 
@@ -660,7 +665,7 @@ module.exports = class {
             ITEM_DETAIL_TITLE: `CAT ITEM`,
             ITEM_USER_LIST: (user) => `${user}'s Items`,
             ITEM_ERR_INVALID_QUANTITY: (quantity) => `${e.error} | Invalid quantity: ${quantity}`,
-			ITEM_USE_ERR_ID_NOT_FOUND: (id) => `${e.error} | You do not own any item with ID: ${id}`,
+                  ITEM_USE_ERR_ID_NOT_FOUND: (id) => `${e.error} | You do not own any item with ID: ${id}`,
             ITEM_USE_SUCCESS: (user, item, quantity) => `${e.success} | **${user}** used ${quantity} x **${item}**`,
             
             /** GADGETS */
@@ -811,7 +816,7 @@ module.exports = class {
             LOTTO_EXAMPLES: "$ld",
 
             /** MEDIA */
-            MEDIA_DESCRIPTION: "Ảnh , phương tiện ngẫu nhiên và gifs",
+            MEDIA_DESCRIPTION: "Ảnh, phương tiện ngẫu nhiên và gifs",
             MEDIA_USAGE: "$meo\n$xinh\n$food\n$meme\n$sexy\n$zai",
             MEDIA_EXAMPLES: "$meo\n$xinh\n$food\n$meme\n$sexy\n$zai",
             
@@ -828,12 +833,12 @@ module.exports = class {
             DOWNGRADE_EXAMPLES: "$downgrade 436520860254470156 1\n$downgrade 436520860254470156 1",
             
             /** FEEDBACK */
-            FEEDBACK_DESCRIPTION: "Gừi phản hồi . Đính kèm ảnh để chỉ rõ bugs hơn!",
+            FEEDBACK_DESCRIPTION: "Gừi phản hồi. Đính kèm ảnh để chỉ rõ bugs hơn!",
             FEEDBACK_USAGE: "$feedback [content]",
             FEEDBACK_EXAMPLES: "$fb I found an error with command high. Take a look at these images!",
 
             /** PREMIUM */
-            PREMIUM_DESCRIPTION: "Check premium status of member and server",
+            PREMIUM_DESCRIPTION: "Kiểm tra trạng thái Premium của thành viên và server",
             PREMIUM_USAGE: "$premium []",
             PREMIUM_EXAMPLES: "$downgra",
             PREMIUM_HELP_UPGRADE_TITLE: "Upgrade Premium",
@@ -860,7 +865,7 @@ module.exports = class {
             ECONOMY_TOTAL: (total) => `Cat economy: **${clearifyNumber(total)} catnip**`,
 
             /** COMMAND */
-            COMMAND_DESCRIPTION: "Disable, enable commands",
+            COMMAND_DESCRIPTION: "Vô hiệu hóa hoặc cho phép sử dụng lệnh!",
             COMMAND_USAGE: "$command disable\n$command enable",
             COMMAND_EXAMPLES: "$cmd d\n$cmd e",
            
@@ -879,6 +884,70 @@ module.exports = class {
             COMMAND_ENABLE_CMD_ALREADY: (isGuild, cmds) => `Command(s) \`${cmds.map((c) => "`"+c+"`").join(", ")}\` not disabled in this ${isGuild ? 'server' : 'channel'}`,
             COMMAND_ENABLE_SUCCESS: (isGuild, cmds) => `${e.success} | Đã cho phép  \`${cmds.map((c) => "`"+c+"`").join(", ")}\` tại ${isGuild ? 'server' : 'channel'}`,
             COMMAND_ENABLE_ALL_SUCCESS: (isGuild) => `${e.success} | Đã cho phép tất cả lệnh tại ${isGuild ? 'server' : 'channel'}`,
+	     /** BATTLE */
+            /** CHARACTER */
+            CHARACTER_DESCRIPTION: "Nhận, Tìm kiếm, Đổi lại hoặc kiểm tra thông tin nhân vật của bạn!",
+            CHARACTER_USAGE: "$character",
+            CHARACTER_EXAMPLES: "$c",
+
+            CHARACTER_CLAIM_DESCRIPTION: "Nhận một nhân vật",
+            CHARACTER_CLAIM_USAGE: "$character claim",
+            CHARACTER_CLAIM_EXAMPLES: "$c c",
+            CHARACTER_REROLL_DESCRIPTION: "Đổi lại một nhân vật ngẫu nhiên",
+            CHARACTER_REROLL_USAGE: "$character reroll",
+            CHARACTER_REROLL_EXAMPLES: "$c rr",
+            CHARACTER_UPGRADE_DESCRIPTION: "Nâng cấp nhân vật của bạn",
+            CHARACTER_UPGRADE_USAGE: "$character upgrade [gem type] [quantity]",
+            CHARACTER_UPGRADE_EXAMPLES: "$c up index 100\n$c up skill 100\n$c up star 100", // use 100 index gem (or skill gem or star gem) 
+            CHARACTER_MINE_DESCRIPTION: "Kiểm tra nhân vật của bạn",
+            CHARACTER_MINE_USAGE: "$character mine (ID/name)",
+            CHARACTER_MINE_EXAMPLES: "$c me\n$c 110\n$c nobi",
+            CHARACTER_INFO_DESCRIPTION: "Kiểm tra thông tin nhân vật",
+            CHARACTER_INFO_USAGE: "$character info [name]",
+            CHARACTER_INFO_EXAMPLES: "$c i nobita",
+            CHARACTER_SEARCH_DESCRIPTION: "Tìm nhân vật",
+            CHARACTER_SEARCH_USAGE: "$character search [name]",
+            CHARACTER_SEARCH_EXAMPLES: "$c ls nobi",
+            CHARACTER_CREATE_DESCRIPTION: "Tạo một nhân vật",
+            CHARACTER_CREATE_USAGE: "$character create [name]",
+            CHARACTER_CREATE_EXAMPLES: "$c add nobita",
+            CHARACTER_DELETE_DESCRIPTION: "Xóa một nhân vật",
+            CHARACTER_DELETE_USAGE: "$character delete [name]",
+            CHARACTER_DELETE_EXAMPLES: "$c del nobita",
+            CHARACTER_EDIT_DESCRIPTION: "Sửa một nhân vật",
+            CHARACTER_EDIT_USAGE: "$character edit [name] [field] [value]",
+            CHARACTER_EDIT_EXAMPLES: "$c edit nobita spawnrate 0.5",
+
+            CHARACTER_CREATE_ERR_EXIST: (name) => `${e.error} | Nhân vật **${name}** đã tồn tại!`,
+            CHARACTER_CREATE_SUCCESS: (name, id) => `${e.success} | Đã thêm nhân vật mới **${name}**, ID: **${id}**`,
+            CHARACTER_ERR_INVALID_NAME: (name) => `${e.error} | Tên nhân vật không hợp lệ: ${name}`,
+            CHARACTER_ERR_NOT_FOUND: `${e.error} | Không tìm thấy nhân vật`,
+            CHARACTER_DELETE_SUCCESS: (name) => `${e.success} | Xóa nhân vật **${name}**`,
+            ERR_INVALID_FIELD: (field, FIELDS) => `${e.error} | Field **${field}** not exist. Try ${FIELDS.map((p) => "`"+p+"`").join(", ")}`,
+            CHARACTER_NOT_FOUND: `Không tìm thấy nhân vật`,
+            CHARACTER_LIST_TITLE: `Trận đấu giữa các nhân vật`,
+            CHARACTER_DETAIL_TITLE: `Trận đấu giữa nhân vật`,
+            CHARACTER_USER_LIST: (user) => `${user}'s characters`,
+
+            CHARACTER_RARE_DESCS: {
+                0: 'normal',
+                1: 'vip',
+                2: 'legend'
+            },
+            CHARACTER_INFO_TYPE: "Chất lượng",
+            CHARACTER_INFO_STARS: "Sao",
+            CHARACTER_INFO_SPAWN_RATE: "Tỉ lệ rớt nhân vật",
+            CHARACTER_INFO_SKILL_RATE: "Tỉ lệ kỹ năng",
+            CHARACTER_SEARCH_TITLE: (key) => `Đang tìm nhân vật theo tên : ${key}`,
+            CHARACTER_INFO_BASIC_INDEX: "Cơ bản",
+            CHARACTER_INFO_EXTEND_INDEX: "Mở rộng",
+            CHARACTER_CLAIM_SUCCESS: (user, char) => `${user} đã tìm thấy một ${char}`,
+            CHARACTER_CLAIM_GUIDE: (prefix) => `Sử dụng \`${prefix}help character\` để xem danh sách lệnh!`,
+            CHARACTER_USER_LIST: (user) => `${user}'s Characters`,
+            CHARACTER_REROLL_ERR_INVALID_ID: `${e.error} | ID nhân vật không hợp lệ`,
+            CHARACTER_REROLL_ERR_NOT_ENOUGH: (char, count) => `${e.error} | Không đủ ${count} ${char} để đổi!`,
+            CHARACTER_REROLL_SUCCESS: (user, char) => `${user} đã đổi lại nhân vật ${char}`,
+
 
             /* COMMON WORDS */
             ID_NOT_FOUND: (id) => `ID **${id}** không tồn tại`,
@@ -887,7 +956,7 @@ module.exports = class {
             GUILD_NOT_FOUND: "Guild không tồn tại",
             CHANNEL_NOT_FOUND: "Channel không tồn tại",
             CHANNEL_NOT_VIEWABLE: "Kênh không xem được",
-            MESSAGE_NOT_FOUND: "msg không tồn tại",
+            MESSAGE_NOT_FOUND: "Msg không tồn tại",
             FEATURE: "Tính Năng",
             CREATED_AT: "Tạo lúc",
             COOLDOWN: "Thời gian chờ",
@@ -899,45 +968,45 @@ module.exports = class {
             DISABLED: "Vô hiệu hóa",
             DESCRIPTION: "Miêu tả",
             CHANNEL: "Kênh",
-            NOTHING_TO_SHOW: "Nothing to show",
-            RESULT: "Result",
+            NOTHING_TO_SHOW: "Không có gì!",
+            RESULT: "Kết quả",
             NO_WINNERS: "Không có người thắng !",
             BET: "Bet",
             PLAYERS: "Người chơi",
-            POINTS: "điểm",
+            POINTS: "Điểm",
             WON: "Thắng",
             UP: "Up",
-            HOST: "chủ ",
+            HOST: "Chủ Game",
             PRICE: "Giá",
             QUANTITY: "Chất lượng",
             REWARD: "phần thưởng",
-            ENDED: "Kết thúc"
+            ENDED: "Kết thúc",
         }
     }
 
     /**
-	 * The method to get language strings
-	 * @param {string} term The string or function to look up
-	 * @param {...*} args Any arguments to pass to the lookup
-	 * @returns {string|Function}
-	 */
-	get(term, ...args) {
-		const value = this.language[term];
-		switch (typeof value) {
-			case "function": return value(...args);
-			default: return value;
-		}
-	}
+       * The method to get language strings
+       * @param {string} term The string or function to look up
+       * @param {...*} args Any arguments to pass to the lookup
+       * @returns {string|Function}
+       */
+      get(term, ...args) {
+            const value = this.language[term];
+            switch (typeof value) {
+                  case "function": return value(...args);
+                  default: return value;
+            }
+      }
 
-	getLang(){
-		return currentLanguage;
+      getLang(){
+            return currentLanguage;
     }
 
     getLangCode() {
         return langCode;
     }
 
-	printDate(pdate, isLongDate){
+      printDate(pdate, isLongDate){
         const monthNames = [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
         let day = pdate.getDate(),
         monthIndex = pdate.getMonth(),
@@ -948,37 +1017,37 @@ module.exports = class {
         let thedate = (isLongDate) ? day + " " + monthNames[monthIndex] + " " + year + " at " + hour + "h" + minute 
         : day + " " + monthNames[monthIndex] + " " + year
         return thedate;
-	}
-	
-	/**
-	 * Parse ms and returns a string
-	 * @param {number} milliseconds The amount of milliseconds
-	 * @returns The parsed milliseconds
-	 */
-	convertMs(milliseconds, allowZero){
-		let roundTowardsZero = milliseconds > 0 ? Math.floor : Math.ceil;
-		let days = roundTowardsZero(milliseconds / 86400000),
-		hours = roundTowardsZero(milliseconds / 3600000) % 24,
-		minutes = roundTowardsZero(milliseconds / 60000) % 60,
-		seconds = roundTowardsZero(milliseconds / 1000) % 60;
-		// if(seconds === 0 && !allowZero) seconds++;
-		let isDays = days > 0,
-		isHours = hours > 0,
+      }
+      
+      /**
+       * Parse ms and returns a string
+       * @param {number} milliseconds The amount of milliseconds
+       * @returns The parsed milliseconds
+       */
+      convertMs(milliseconds, allowZero){
+            let roundTowardsZero = milliseconds > 0 ? Math.floor : Math.ceil;
+            let days = roundTowardsZero(milliseconds / 86400000),
+            hours = roundTowardsZero(milliseconds / 3600000) % 24,
+            minutes = roundTowardsZero(milliseconds / 60000) % 60,
+            seconds = roundTowardsZero(milliseconds / 1000) % 60;
+            // if(seconds === 0 && !allowZero) seconds++;
+            let isDays = days > 0,
+            isHours = hours > 0,
         isMinutes = minutes > 0,
         isSeconds = seconds > 0;
-		let pattern = 
+            let pattern =
         (!isDays ? "" : "{days}D ")+
         (!isHours ? "" : "{hours}H ")+
         (!isMinutes ? "" : "{minutes}M ")+
         (!isSeconds ? "" : (!isDays && !isHours && !isMinutes ? "{seconds}s" : "{seconds}S"))
 
-		let sentence = pattern
+            let sentence = pattern
         .replace("{duration}", pattern)
         .replace("{days}", days)
         .replace("{hours}", hours)
         .replace("{minutes}", minutes)
         .replace("{seconds}", seconds);
-		return sentence.trim();
-	}
+            return sentence.trim();
+      }
 
 }
