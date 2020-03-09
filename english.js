@@ -270,6 +270,9 @@ module.exports = class {
             VOICECHANNEL_INFO_DESCRIPTION: "Room info",
             VOICECHANNEL_INFO_USAGE: "$voice info",
             VOICECHANNEL_INFO_EXAMPLES: "$vc i",
+            VOICECHANNEL_CLEAN_DESCRIPTION: "Clean voice settings messages",
+            VOICECHANNEL_CLEAN_USAGE: "$voice clean",
+            VOICECHANNEL_CLEAN_EXAMPLES: "$vc cl",
             VOICECHANNEL_ALLOW_DESCRIPTION: "Allow user(s) to connect",
             VOICECHANNEL_ALLOW_USAGE: "$voice allow [@user]",
             VOICECHANNEL_ALLOW_EXAMPLES: "$vc a @komatsu#7447 @ustamok#3010",
@@ -735,8 +738,8 @@ module.exports = class {
             /** GIVEAWAY */
             GIVEAWAY_DESCRIPTION: `Giveaways with requirements`,
             GIVEAWAY_START_DESCRIPTION: "Create and start new giveaway. For requirements, you need to create task first!",
-            GIVEAWAY_START_USAGE: "$giveaway start [duration] [winners] (--task)",
-            GIVEAWAY_START_EXAMPLES: `$ga start 12h 3w\n${e.userPremium} $ga start 5d 2w --T001`,
+            GIVEAWAY_START_USAGE: `$giveaway start [duration] [winners] [title]\n${e.userPremium} $giveaway start [duration] [winners] [--task] [title]`,
+            GIVEAWAY_START_EXAMPLES: `$ga start 12h 3w One month Nitro classic\n${e.userPremium} $ga start 5d 2w --T001 One month Nitro classic`,
             GIVEAWAY_LIST_DESCRIPTION: "List of ongoing giveaways in the server",
             GIVEAWAY_LIST_USAGE: "$giveaway list",
             GIVEAWAY_LIST_EXAMPLES: "$ga ls",
@@ -773,10 +776,12 @@ module.exports = class {
             GIVEAWAY_REACT_DESC: (emoji) => `React ${emoji} to join`,
             GIVEAWAY_FOOTER: (quantity) => `Rolls ${quantity} win${parseInt(quantity) > 1 ? 's' : ''} at`,
             GIVEAWAY_FOOTER_ENDED: (quantity) => `Rolled ${quantity} win${parseInt(quantity) > 1 ? 's' : ''} at`,
-            GIVEAWAY_NO_WINNERS: (title, link) => `Giveaway **${title}** ended, no winners\nLink: ${link}`,
-            GIVEAWAY_CONGRATZ: (winners, title, link) => `Congratz ${winners}, you won the giveaway **${title}**\nLink: ${link}`,
-            GIVEAWAY_CANCEL: (title, link) => `Giveaway **${title}** canceled\nLink: ${link}`,
+            GIVEAWAY_NO_WINNERS: (title, link) => `Giveaway **${title}** ended, no winners`,
+            GIVEAWAY_CONGRATZ: (winners, title, link) => `Congratz ${winners}, you won the giveaway **${title}**`,
+            GIVEAWAY_CANCEL: (title, link) => `Giveaway **${title}** canceled`,
             GIVEAWAY_TASK_HINT: (prefix) => `Use \`${prefix}task ga\` to confirm your requirements`,
+            GIVEAWAY_JUMP: (url) => `[Jump to giveaway](${url})`,
+            GIVEAWAY_REROLL_MSG: (winner) => `New winner: ${winner}`,
 
             /* ITEM USAGES */
             CREATED_ROLE: (name, color, position) => `Role **${name}** created | Color: \`${color}\`, Position \`${position}\``,
@@ -812,7 +817,8 @@ module.exports = class {
             FEEDBACK_DESCRIPTION: "Send feedback, report bugs. Attach images to make it more clear!",
             FEEDBACK_USAGE: "$feedback [content]",
             FEEDBACK_EXAMPLES: "$fb I found an error with command high. Take a look at these images!",
-
+            FEEDBACK_MISSING_CONTENT: "missing feedback content!",
+            
             /** PREMIUM */
             PREMIUM_DESCRIPTION: "Check premium status of member and server",
             PREMIUM_USAGE: "$premium []",
@@ -911,7 +917,7 @@ module.exports = class {
             CHARACTER_LIST_TITLE: `BATTLE CHARACTERS`,
             CHARACTER_DETAIL_TITLE: `BATTLE CHARACTER`,
 
-            CHARACTER_INFO_TYPE: "Type",
+            CHARACTER_INFO_TYPE: "Gen",
             CHARACTER_INFO_STARS: "Stars",
             CHARACTER_INFO_SPAWN_RATE: "Spawn rate",
             CHARACTER_INFO_SKILL_RATE: "Skill rate",
@@ -930,7 +936,7 @@ module.exports = class {
             CHARACTER_USE_ALREADY: (gadget) => `**${gadget}** has already been your main character`,
             CHARACTER_RENAME_ERR_TOO_LONG: (max) => `${e.error} | Character's nickname can not be longer than **${max}** character`,
             CHARACTER_RENAME_SUCCESS: (nickname, name) => `${e.success} | Your **${name}** has been named **${nickname}**`,
-
+            
             /** GEM */
             GEM_DESCRIPTION: "Search, sell and check your gems",
             GEM_USAGE: "$gem",
@@ -973,13 +979,14 @@ module.exports = class {
             GEM_INFO_SPAWN_RATE: "Spawn rate",
             GEM_INFO_PUBLIC: "Public",
             GEM_INFO_INDEX: "Bonus index",
+            GEM_INFO_SUCCESS_RATE: "Success rate",
             GEM_SEARCH_TITLE: (key) => `Searching gems for: ${key}`,
             GEM_USER_LIST: (user) => `${user}'s Gems`,
             GEM_SELL_ERR_INVALID_ID: `${e.error} | Invalid gem ID(s)`,
             GEM_SELL_ERR_NOT_ENOUGH: `${e.error} | Not enough gems to sell`,
             GEM_SELL_ERR_TYPE_INVALID: `${e.error} | Invalid gem type(s)`,
-            GEM_SELL_TYPE_SUCCESS: (user, sells, total) => `${e.success} | **${user}** sold ${Object.keys(sells).map((type) => e.gemType[type] + "**x" + clearifyNumber(sells[type]) + "**").join(", ")} for total of **${clearifyNumber(total)}** ${e.dorayaki}`,
-            GEM_SELL_ID_SUCCESS: (user, uGem, quantity, price) => `${e.success} | **${user}** sold **${clearifyNumber(quantity)}** x ${e.gemType[uGem.gem.type]} **${uGem.gem.name}** for **${clearifyNumber(price)}** ${e.dorayaki}`,
+            GEM_SELL_TYPE_SUCCESS: (user, sells, total) => `${e.success} | **${user}** sold ${Object.keys(sells).map((type) => e.indexType[type] + "**x" + clearifyNumber(sells[type]) + "**").join(", ")} for total of **${clearifyNumber(total)}** ${e.dorayaki}`,
+            GEM_SELL_ID_SUCCESS: (user, uGem, quantity, price) => `${e.success} | **${user}** sold **${clearifyNumber(quantity)}** x ${e.indexType[uGem.gem.type]} **${uGem.gem.name}** for **${clearifyNumber(price)}** ${e.dorayaki}`,
       
             GEM_ID_ERR_NOT_FOUND: (ID) => `${e.error} | Gem ID ${ID} not found or not enough stock`,
             GEM_EQUIP_SUCCESS: (gem) => `${e.success} | **${gem}** has been equiped`,
@@ -987,6 +994,11 @@ module.exports = class {
             GEM_EQUIP_ALREADY: (gem) => `${e.error} | **${gem}** has already equiped`,
             GEM_UNEQUIP_NOT_EQUIP: (gem) => `${e.error} | **${gem}** hasn't equiped yet`,
             GEM_UNEQUIP_SUCCESS: (gem) => `${e.success} | **${gem}** has been unequiped`,
+
+            /** UPGRADE */
+            UPGRADE_ERR_INDEX_ALREADY: (target, type, oldBonus) => `Your **${target}** has been upgraded ${e.indexType[type]}**+${oldBonus}** already, try to use a higher index gem!`,
+            UPGRADE_SUCCESS: (target, type, up, times, rate) => `${e.success} | Congratz!!! Your **${target}** has been upgraded successfully ${e.indexType[type]}**+${up}** at rate \`${Math.floor(rate*10000)/100}%\` after **${times}** ${times == 1 ? 'try' : 'tries'}!`,
+            UPGRADE_FAILS: (rate) => `Good luck next time! Rate: \`${Math.floor(rate*10000)/100}%\``,
 
             /** GADGET */
             GADGET_DESCRIPTION: "Search, sell, combine, equip, upgrade and check your gadgets",
@@ -1026,6 +1038,9 @@ module.exports = class {
             GADGET_UNEQUIP_DESCRIPTION: "Unequip a gadget",
             GADGET_UNEQUIP_USAGE: "$gadget unequip [ID]",
             GADGET_UNEQUIP_EXAMPLES: "$gg unuse 20",
+            GADGET_RENAME_DESCRIPTION: "Rename a gadget",
+            GADGET_RENAME_USAGE: "$gadget rename [ID] [name]",
+            GADGET_RENAME_EXAMPLES: "$gg rn 20 Heliii Copterrr",
 
             GADGET_CREATE_ERR_EXIST: (name) => `${e.error} | Gadget **${name}** already exists!`,
             GADGET_CREATE_SUCCESS: (name, id) => `${e.success} | Added new gadget **${name}**, ID: **${id}**`,
@@ -1048,7 +1063,7 @@ module.exports = class {
             GADGET_SELL_ID_SUCCESS: (user, uGadget, quantity, price) => `${e.success} | **${user}** sold **${clearifyNumber(quantity)}** x ${e.gadgetType[uGadget.gadget.type]} **${uGadget.gadget.name}** ${generateStars(uGadget.star, e.star)} for **${clearifyNumber(price)}** ${e.dorayaki}`,
             GADGET_COMBINE_ERR_NOT_ENOUGH: (gadget) => `${e.error} | Not enough **${gadget}** to combine`,
             GADGET_COMBINE_ERR_MAX: (gadget, max) => `${e.error} | Your **${gadget}** has reached the maximum **${max}** star`,
-            GADGET_COMBINE_SUCCESS: (user, uGadget, quantity) => `${e.success} | **${user}** has combined sucessfully **${clearifyNumber(quantity)}** x ${e.gadgetType[uGadget.gadget.type]} **${uGadget.gadget.name}** ${generateStars(uGadget.star+1, e.star)}`,
+            GADGET_COMBINE_SUCCESS: (user, uGadget, quantity) => `${e.success} | **${user}** has combined sucessfully **${clearifyNumber(quantity)}** x ${e.gadgetType[uGadget.gadget.type]} **${uGadget.nickname || uGadget.gadget.name}** ${e.stars[uGadget.star+1]}`,
             GADGET_INFO_EXTEND_INDEX: "Extend",
             GADGET_INFO_BASIC_INDEX: "Basic",
             GADGET_INFO_SKILL: "Skills",
@@ -1062,6 +1077,8 @@ module.exports = class {
             GADGET_EQUIP_ALREADY: (gadget) => `${e.error} | **${gadget}** has already equiped`,
             GADGET_UNEQUIP_NOT_EQUIP: (gadget) => `${e.error} | **${gadget}** hasn't equiped yet`,
             GADGET_UNEQUIP_SUCCESS: (gadget) => `${e.success} | **${gadget}** has been unequiped`,
+            GADGET_RENAME_ERR_TOO_LONG: (max) => `${e.error} | Gadget's nickname can not be longer than **${max}** characters`,
+            GADGET_RENAME_SUCCESS: (nickname, name) => `${e.success} | Your **${name}** has been named **${nickname}**`,
 
             /** WEAPON */
             WEAPON_DESCRIPTION: "Search, auction, unify, equip, upgrade and check your weapons",
@@ -1098,6 +1115,9 @@ module.exports = class {
             WEAPON_EQUIP_DESCRIPTION: "Equip a weapon",
             WEAPON_EQUIP_USAGE: "$weapon equip [ID]",
             WEAPON_EQUIP_EXAMPLES: "$wp use 20",
+            WEAPON_RENAME_DESCRIPTION: "Rename a weapon",
+            WEAPON_RENAME_USAGE: "$weapon rename [ID] [name]",
+            WEAPON_RENAME_EXAMPLES: "$wp rn 20 a cute spoon",
 
             WEAPON_CREATE_ERR_EXIST: (name) => `${e.error} | Weapon **${name}** already exists!`,
             WEAPON_CREATE_SUCCESS: (name, id) => `${e.success} | Added new weapon **${name}**, ID: **${id}**`,
@@ -1130,7 +1150,20 @@ module.exports = class {
             WEAPON_EQUIP_ALREADY: (weapon) => `${e.error} | **${weapon}** has already equiped`,
             WEAPON_UNEQUIP_NOT_EQUIP: (weapon) => `${e.error} | **${weapon}** hasn't equiped yet`,
             WEAPON_UNEQUIP_SUCCESS: (weapon) => `${e.success} | **${weapon}** has been unequiped`,
+            WEAPON_RENAME_ERR_TOO_LONG: (max) => `${e.error} | Weapon's nickname can not be longer than **${max}** characters`,
+            WEAPON_RENAME_SUCCESS: (nickname, name) => `${e.success} | Your **${name}** has been named **${nickname}**`,
+            UPGRADE_WEAPON_LEVEL_SUCCESS: (weapon, level, gem, quantity, rate) => `${e.success} | Congratz!!! Your **${weapon}** has been upgraded successfully to ${e.weaponLevel[level]} by ${gem}**x${clearifyNumber(quantity)}** at rate \`${Math.floor(rate*10000)/100}%\``,
+            WEAPON_UPGRADE_MAX: (weapon, max) => `Your **${weapon}** has reached the maximum level ${e.weaponLevel[max]}`,
 
+            /** BATTEL PROFILE */
+            ME_DESCRIPTION: "Show your battle equipments",
+            ME_USAGE: "$me",
+            ME_EXAMPLES: "$me",
+            GADGET_1: "Gadget 1",
+            GADGET_2: "Gadget 2",
+            GADGET_3: "Gadget 3",
+            RANK_POINT: (point) => `Rank point: __**${clearifyNumber(point)}**__`,
+            
             /* COMMON WORDS */
             ID_NOT_FOUND: (id) => `ID **${id}** not found`,
             USER_NOT_FOUND: "User not found",
@@ -1177,7 +1210,17 @@ module.exports = class {
             SKILL_RATE: "Skill rate",
             BASIC: "Basic",
             EXTEND: "Extend",
-
+            EQUIPMENTS: "Equipments",
+            GEN: "Gen",
+            CHARACTER: "Character",
+            WEAPON: "Weapon",
+            GADGET: "Gadget",
+            BATTLE_EQUIPMENTS: "Battle Equipments",
+            WEAPON_LEVEL: "WLevel",
+            WEAPON_COLOR: "WColor",
+            ELEMENTS: "Elements",
+            NICKNAME: "Nickname",
+            
             /** CONVERT MS */
             convertMs: (ms) => this.convertMs(ms)
         }
