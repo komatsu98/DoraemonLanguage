@@ -227,9 +227,10 @@ module.exports = class {
             CONFESSION_ERR_NOT_MEM: (guild) => `${e.error} | You are not a member of server **${guild.name}**`,
             CONFESSION_ERR_MEMBER_MISSING_READ_PERM: (channel) => `${e.error} | You don't have permission to read message in **${channel}**`,
             CONFESSION_WAIT_PENDING: (channel) => `${e.loading} | Your confession is pending before sent to **${channel}**`,
+            CONFESSION_REPLY_WAIT_PENDING: (channel) => `${e.loading} | Your reply is pending before sent to **${channel}**`,
             CONFESSION_REPLY_ERR_INVALID_COUNT: (count) => `${e.error} | Invalid confession number: **${count}**`,
             CONFESSION_REPLY_ERR_NOT_PRE: `Reply confession only works for **Guild Premium**`,
-            CONFESSION_SEND_ERR_ATTACH_NOTPRE: `Attach images only works for **Guild Premium**`,
+            CONFESSION_SEND_WARN_ATTACH_NOTPRE: `${e.warning} | Attach images only works for **Guild Premium**`,
 
             /** COUNTING */
             COUNTING_DESCRIPTION_PROVIDED: `Counting channel`,
@@ -377,7 +378,7 @@ module.exports = class {
             STOP_ERR_IS_USING: `${e.error} | Someone is using this command!`,
 
             /** SPEAK */
-            SPEAK_DESCRIPTION: "Text to speech. Use `speakx` to delete original message.\nSoundboards: `aecc`, `ccc`, `ccmmd`, `clmnm`, `clqgv`, `dccmg`, `dt`, `dvl`, `gc`, `hldmm`, `md`, `nl`, `ooa`, `sqsq`, `tlm`, `ttdnd`, `tuk`, `vcl`, `xl`, `ydcg`, `yrd`",
+            SPEAK_DESCRIPTION: "Text to speech. Use `speakx` to delete original message.\nSoundboards: `aecc`, `ccc`, `ccmmd`, `clmnm`, `clq`, `dccmg`, `dt`, `dvl`, `gc`, `hldmm`, `md`, `nl`, `ooa`, `sqsq`, `tlm`, `ttdnd`, `tuk`, `vcl`, `xl`, `ydcg`, `yrd`",
             SPEAK_USAGE: "$speak [content]",
             SPEAK_EXAMPLES: "$s hello, it's me\n$sx hello, guess who",
             SPEAK_ERR_IS_SPEAKING: `${e.error} | Wait a minute, Mon is talking right now`,
@@ -410,7 +411,7 @@ module.exports = class {
             LEVEL_RESET_EXAMPLES: "$lvl rs all\n$lvl rs @komatsu#7447 @ustamok#3010",
             LEVEL_SETXP_DESCRIPTION: "Custom channel xp range. Use `--g` for server custom",
             LEVEL_SETXP_USAGE: "$level setxp (--g) [min] [max]",
-            LEVEL_SETXP_EXAMPLES: "$level setxp 10 20\n$level setxp --g 10 20",
+            LEVEL_SETXP_EXAMPLES: "$level setxp 10 20\n$lvl setxp --g 10 20",
             LEVEL_UPDATE_DESCRIPTION: "Update missing role reward for members",
             LEVEL_UPDATE_USAGE: "$level update",
             LEVEL_UPDATE_EXAMPLES: "$lvl update",
@@ -529,12 +530,13 @@ module.exports = class {
             BLACKJACK_MINE_TITLE: (user) => `${user}'s blackjack games`,
             BLACKJACK_ERR_GAME_NOT_FOUND: "Game not found",
             BLACKJACK_ERR_INVALID_ID: "Invalid game ID",
+            BLACKJACK_JOIN_ERR_ALREADY: `${e.error} | You've already joined this game before`,
             BLACKJACK_LIST_NO_GAME: `No games to show`,
             BLACKJACK_START_ERR_NOT_HOST: `${e.error} | Only host can start game`,
-            BLACKJACK_START_ERR_ALONE: `You cannot play alone in PvP game!`,
+            BLACKJACK_START_ERR_ALONE: `${e.error} | You cannot play alone in PvP game!`,
             BLACKJACK_END: "Blackjack ended",
             BLACKJACK_START: "Blackjack started",
-            BLACKJACK_RESULT_SUPER: "Supper Blackjack",
+            BLACKJACK_RESULT_SUPER: "Super Blackjack",
             BLACKJACK_RESULT_BLACKJACK: "Blackjack",
             BLACKJACK_RESULT_HIGH_FIVE: "High-five",
             BLACKJACK_RESULT_BUST: "Bust",
@@ -573,9 +575,10 @@ module.exports = class {
             LIENG_LIST_TITLE: (guild) => `${guild}'s lieng games`,
             LIENG_MINE_TITLE: (user) => `${user}'s lieng games`,
             LIENG_ERR_GAME_NOT_FOUND: "Game not found",
+            LIENG_JOIN_ERR_ALREADY: `${e.error} | You've already joined this game before`,
             LIENG_LIST_NO_GAME: `No games to show`,
             LIENG_START_ERR_NOT_HOST: `Only host can start game`,
-            LIENG_START_ERR_ALONE: `You cannot play alone in PvP game!`,
+            LIENG_START_ERR_ALONE: `${e.error} | You cannot play alone in PvP game!`,
             LIENG_END: "Lieng ended",
             LIENG_START: "Lieng started",
             LIENG_RESULT_TRIPLE: "Triple",
@@ -996,6 +999,7 @@ module.exports = class {
             GEM_UNEQUIP_SUCCESS: (gem) => `${e.success} | **${gem}** has been unequiped`,
 
             /** UPGRADE */
+            UPGRADE_ERR_INVALID_TYPE: `${e.error} | Invalid gem type`,
             UPGRADE_ERR_INDEX_ALREADY: (target, type, oldBonus) => `Your **${target}** has been upgraded ${e.indexType[type]}**+${oldBonus}** already, try to use a higher index gem!`,
             UPGRADE_SUCCESS: (target, type, up, times, rate) => `${e.success} | Congratz!!! Your **${target}** has been upgraded successfully ${e.indexType[type]}**+${up}** at rate \`${Math.floor(rate*10000)/100}%\` after **${times}** ${times == 1 ? 'try' : 'tries'}!`,
             UPGRADE_FAILS: (rate) => `Good luck next time! Rate: \`${Math.floor(rate*10000)/100}%\``,
@@ -1010,7 +1014,7 @@ module.exports = class {
             GADGET_SELL_EXAMPLES: "$gg sell 3 30",
             GADGET_COMBINE_DESCRIPTION: "Combine your 4 gadgets and get higher star gadget",
             GADGET_COMBINE_USAGE: "$gadget combine [ID] [quantity]",
-            GADGET_COMBINE_EXAMPLES: "$gg rr 23 all",
+            GADGET_COMBINE_EXAMPLES: "$gg cb 23 all",
             GADGET_UPGRADE_DESCRIPTION: "Upgrade your gadget",
             GADGET_UPGRADE_USAGE: "$gadget upgrade [type] [times]",
             GADGET_UPGRADE_EXAMPLES: "$gg up offensive 3",
@@ -1164,6 +1168,11 @@ module.exports = class {
             GADGET_3: "Gadget 3",
             RANK_POINT: (point) => `Rank point: __**${clearifyNumber(point)}**__`,
             
+            /** STATS */
+            STAT_DESCRIPTION: "Show stats",
+            STAT_USAGE: "$stat",
+            STAT_EXAMPLES: "$stat",
+
             /* COMMON WORDS */
             ID_NOT_FOUND: (id) => `ID **${id}** not found`,
             USER_NOT_FOUND: "User not found",
@@ -1220,6 +1229,7 @@ module.exports = class {
             WEAPON_COLOR: "WColor",
             ELEMENTS: "Elements",
             NICKNAME: "Nickname",
+            SOMEONE: "Someone",
             
             /** CONVERT MS */
             convertMs: (ms) => this.convertMs(ms)
@@ -1293,3 +1303,4 @@ module.exports = class {
     }
 
 }
+
