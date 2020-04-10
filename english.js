@@ -40,7 +40,8 @@ module.exports = class {
             ERR_INPUT_INVALID_CHARACTER: `${e.error} | Invalid character`,
             ERR_INVALID_CHOICE: (options) => `${e.error} | Invalid choice. Try ${options.map((p) => "`" + p + "`").join(", ")}`,
             ERR_CMD_NO_USER: `${e.error} | Couldn't find user`,
-            ERR_INVALID_FIELD: (field, FIELDS) => `${e.error} | Field **${field}** not exist. Try ${FIELDS.map((p) => "`" + p + "`").join(", ")}`,
+            ERR_INVALID_FIELD: (field, FIELDS) => `${e.error} | Field **${field}** not exist. Try ${Array.isArray(FIELDS) ? FIELDS.map((p) => "`" + p + "`").join(", ") : FIELDS}`,
+            INVALID_FIELD: (field, FIELDS) => `Field **${field}** not exist. Try ${Array.isArray(FIELDS) ? FIELDS.map((p) => "`" + p + "`").join(", ") : FIELDS}`,
             JSON_ERR_FORMAT: `${e.error} | Invalid JSON format`,
             ERR_PERMISSION_LOWER_ROLE: `${e.error} __**Missing permissions**__\n\nI need permission \`MANAGE_ROLES\` and my role position must be high enough to do this!`,
             PREFIX_INFO: (prefix) => `${e.success} | The prefix of this server is \`${prefix}\`!`,
@@ -77,15 +78,15 @@ module.exports = class {
             HELP_DESC_SUBCMD: (prefix, cmd) => `Use \`${prefix}help ${cmd} [subcommand]\` for more details`,
 
             /* COINFLIP COMMAND */
-            COINFLIP_DESCRIPTION: "Coinflip classic (choice: \`t\`, \`s\`) and extended mode (choice: `0s`-`4s`, `0t`-`4t`)",
+            COINFLIP_DESCRIPTION: "Coinflip with 2 modes\n**Classic**: choices `t`, `s` - win `x2` bet\n**Extended**: choices `1s`-`3s` or `1t`-`3t` - win `x3.5` bet, choices `4s`,`4n` or `0s`, `0n` - win `x15` bet",
             COINFLIP_USAGE: "$xocdia [bet] (choice)",
             COINFLIP_EXAMPLES: "$xocdia 500\n$xocdia all t\n$xocdia all 3t",
             COINFLIP_NAME_CLASSIC: "Coinflip Classic",
             COINFLIP_NAME_EXTENDED: "Coinflip Extended",
             COINFLIP_BET_DESCRIPTION: (username, amount, choice) => `**${username}** bet **${clearifyNumber(amount)} catnip** on **${choice}**`,
             COINFLIP_FLIPPING: "Flipping <a:CAT_hyper:588594746176307200>",
-            COINFLIP_CHOICES_RESULT: (CHOICES, winChoices) => `Result: [**${CHOICES[winChoices[0]]}**] [**${CHOICES[winChoices[1]]}**] [**${CHOICES[winChoices[2]]}**] [**${CHOICES[winChoices[3]]}**]`,
-            COINFLIP_FINAL_RESULT: (username, amount, choice, reward) => `**${username}** bet **${clearifyNumber(amount)} catnip** on **${choice.toUpperCase()}**` + (reward > 0 ? ` and won **${clearifyNumber(reward)} catnip**` : " and lost it all :("),
+            COINFLIP_CHOICES_RESULT: (CHOICES, winChoices) => `Result: ${e.coinflip[CHOICES[winChoices[0]]]} ${e.coinflip[CHOICES[winChoices[1]]]} ${e.coinflip[CHOICES[winChoices[2]]]} ${e.coinflip[CHOICES[winChoices[3]]]}`,
+            COINFLIP_FINAL_RESULT: (username, amount, choice, reward) => `**${username}** bet **${clearifyNumber(amount)} catnip** on **${choice}**` + (reward > 0 ? ` and won **${clearifyNumber(reward)} catnip**` : " and lost it all :("),
 
             /* CATNIP */
             CATNIP_ERR_NOT_ENOUGH: `${e.error} | Not enough catnip`,
@@ -104,7 +105,7 @@ module.exports = class {
             DAILY_HIGH_STREAK: (streak) => `High streak (${streak})`,
             DAILY_HIGH_NEXT: (amount) => `Next reward: ${clearifyNumber(amount)} catnip`,
             DAILY_VOTE_STREAK: (streak) => `Vote streak (${streak})`,
-            DAILY_VOTE_NEXT: (min, max) => `Next vote: random ${clearifyNumber(min)} - ${clearifyNumber(max)} catnip (+250 every 5 votes)`,
+            DAILY_VOTE_NEXT: (min, max) => `Next vote: random ${clearifyNumber(min)} - ${clearifyNumber(max)} catnip`,
             DAILY_VOTE_TIP: `Vote **Doraemon** on __**[link](${l.botVote})**__ (every 12 hours) to receive more cool rewards`,
             DAILY_PREMIUM: (point) => `Premium (${point} points)`,
             DAILY_PREMIUM_COUNT: (bonus) => `Bonus: ${clearifyNumber(bonus)} catnip`,
@@ -230,7 +231,7 @@ module.exports = class {
             CONFESSION_REPLY_WAIT_PENDING: (channel) => `${e.loading} | Your reply is pending before sent to **${channel}**`,
             CONFESSION_REPLY_ERR_INVALID_COUNT: (count) => `${e.error} | Invalid confession number: **${count}**`,
             CONFESSION_REPLY_ERR_NOT_PRE: `Reply confession only works for **Guild Premium**`,
-            CONFESSION_SEND_WARN_ATTACH_NOTPRE: `${e.warning} | Attach images only works for **Guild Premium**`,
+            CONFESSION_SEND_WARN_ATTACH_NOTPRE: `${e.warning} | Attaching images without pending mode may cause spamming!`,
 
             /** COUNTING */
             COUNTING_DESCRIPTION_PROVIDED: `Counting channel`,
@@ -254,9 +255,11 @@ module.exports = class {
             LIXI_ERR_INVALID_RANDOM_AMOUNT: (min) => `${e.error} | Minimum for random mode: **${clearifyNumber(min)} catnip**`,
             LIXI_ERR_INVALID_BOX_AMOUNT: (min) => `${e.error} | Minimum for each box: **${clearifyNumber(min)} catnip**`,
             LIXI_GIVE_SUCCESS: (turns, total) => `${e.success} | You gave away **${turns}** boxes for total **${clearifyNumber(total)} catnip**`,
-            LIXI_TAKE_SUCCESS: (num, total, givers) => `${e.success} | You took **${num}** boxes for total **${clearifyNumber(total)} catnip** from **Lixi** of ${givers}`,
+            LIXI_TAKE_SUCCESS: (num, total, givers) => `${e.success} | You took **${num}** box(es) for total **${clearifyNumber(total)} catnip** from **Lixi** of ${givers}`,
             LIXI_ERR_NO_BOX: `${e.error} | Nothing to take, let's give some!`,
             LIXI_ERR_ALL_TAKEN: `${e.error} | You can't take more, let's give some!`,
+            LIXI_LIST_TITLE: "Lixi List",
+            LIXI_INFO: (remain, turns, random, guild) => `**${clearifyNumber(remain)}** catnip in **${turns}** boxes ${random ? "`[r]`" : ''}${guild ? "`[g]`" : ''}`,
 
             /** VOICECHANNEL */
             VOICECHANNEL_DESCRIPTION: "Auto voice channels. Create temp voice channels with settings of the creator!",
@@ -349,8 +352,8 @@ module.exports = class {
             VOICECHANNEL_ERR_HOST_EXISTS: `${e.error} | The host is around here, calm down!`,
             VOICECHANNEL_ERR_ALREADY_HOST: `${e.error} | You are the host, remember?`,
             VOICHANNEL_ERR_MISSING_CATE_PERMS: `${e.error} | Missing permissions!\nTry to give me all the permissions (\`Manage Channel\` and \`Manage Permission\`) with this **Creator channel**`,
-            CHANNEL_VOICECHANNELCREATOR_ERR_MAX: (guild) => `${e.error} | Server **${guild}** have reached maximum Creator channels.`,
-            CHANNEL_CONFESSION_ERR_MAX: (guild, cn) => `${e.error} | Server **${guild}** have reached maximum Confession channel (ID: ${cn})`,
+            CHANNEL_VOICECHANNELCREATOR_ERR_MAX: (guild, channel) => `${e.error} | Server **${guild}** have reached maximum Creator channels (**${channel}**)`,
+            CHANNEL_CONFESSION_ERR_MAX: (guild, cn) => `${e.error} | Server **${guild}** have reached maximum Confession channel (<#${cn}>)`,
 
             /** LINKS */
             LINK_DESCRIPTION: "Useful links",
@@ -489,14 +492,14 @@ module.exports = class {
             GTN_HINT_LVL_3: (numbers) => [`The set of digits: **${numbers}**`],
 
             /** BAUCUA */
-            BAUCUA_DESCRIPTION: "Game Baucua. Choice: `tom`, `ga`, `nai`, `ca`, `bau`, `cua`",
+            BAUCUA_DESCRIPTION: `Game Baucua\nChoices: \`tom\` (${e.baucua['tom']}), \`ga\` (${e.baucua['ga']}), \`nai\` (${e.baucua['nai']}), \`ca\` (${e.baucua['ca']}), \`bau\` (${e.baucua['bau']}), \`cua\` (${e.baucua['cua']})`,
             BAUCUA_USAGE: "$baucua [bet] (choice)",
             BAUCUA_EXAMPLES: "$bc 5000\n$bc all tom",
-            BAUCUA_START_TITLE: "Baucua Started",
-            BAUCUA_COUNTDOWN: (time) => `ends in ${this.convertMs(time)}`,
-            BAUCUA_END_TITLE: "Baucua Ended",
-            BAUCUA_BET_DESCRIPTION: (user, amount, choice) => `**${user}** bet **${clearifyNumber(amount)} catnip** on **${choice}**`,
-            BAUCUA_WIN_DESCRIPTION: (user, amount) => `${user} won **${clearifyNumber(amount)} catnip**`,
+            BAUCUA_TITLE: "Baucua",
+            // BAUCUA_COUNTDOWN: (time) => `ends in ${this.convertMs(time)}`,
+            // BAUCUA_END_TITLE: "Baucua Ended",
+            BAUCUA_BET_DESCRIPTION: (user, amount, choice, timeout) => `${e.baucua['icon']} **|** **${user}** bet **${clearifyNumber(amount)} catnip** on ${e.baucua[choice]} (\`${this.convertMs(timeout)} left\`)`,
+            BAUCUA_WIN_DESCRIPTION: (user, amount) => `${e.baucua['icon']} **|** ${user} won **${clearifyNumber(amount)} catnip**`,
 
             /** BLACKJACK */
             BLACKJACK_DESCRIPTION: "Blackjack PvP",
@@ -705,7 +708,8 @@ module.exports = class {
             TASK_INFO_GUILD: (guild) => `**Server**: ${guild}`,
 
             TASK_PROGRESS: (require, progress) => `• Progress: \`${clearifyNumber(progress)}/${clearifyNumber(require)}\``,
-            TASK_DESC_SEND: (channels, content, require) => `• Send \`${require}\` message(s) \`${content}\` ${channels.length ? `to channel(s) ` + channels.join(' and/or ') : ''}`,
+            TASK_DESC_SEND: (channels, allowcontain, content, require) => `• Send \`${require}\` message(s) ${allowcontain ? 'contains ' : ''}${content ? " `" + content + "`" : ''} ${channels.length ? `to channel(s) ` + channels.join(' and/or ') : ''}`,
+            TASK_DESC_VOICE: (channels, guild, require) => `• Stay in voice channel(s) ${channels ? channels.join(' and/or ') + " " : ''}of server **${guild}** for \`${this.convertMs(require*60*1000)}\``,
             TASK_DESC_REACT: (emojis, link, require) => `• React emoji(s) ${emojis.length ? emojis.join(' and/or ') + ' ' : ''}to [message](${link}) for  \`${require}\` time(s)`,
             TASK_DESC_COLLECT_CATNIP: (commands, exchange, farm, require) => `• Collect \`${clearifyNumber(require)}\` catnip${commands.length ? ` by command(s) \`${commands.join('\` and/or \`')}\`` : ''}${exchange ? ` by \`exchange\`` : ''}${farm ? ` by \`farm\`` : ''}`,
             TASK_DESC_SPEND_CATNIP: (commands, require) => `• Spend \`${clearifyNumber(require)}\` catnip${commands.length ? ` with command(s) \`${commands.join('\` and/or \`')}\`` : ''}`,
@@ -714,7 +718,7 @@ module.exports = class {
             TASK_DESC_MENTIONED: (users, require) => `• Be mentioned ${users.length ? 'by ' + users.join(' and/or ') + ' ' : ''}for \`${require}\` time(s)`,
             TASK_DESC_COMMAND: (commands, users, require) => `• Use command(s) ${commands.length ? '\`' + commands.join('\` and/or \`') + '\`' : ''} ${users.length ? 'on ' + users.join(' and/or ') + ' ' : ''}for \`${require}\` time(s)`,
             TASK_DESC_COMMANDED: (commands, users, require) => `• Has user(s) ${users.length ? users.join(' and/or ') + ' ' : ''} used command(s) ${commands.length ? '\`' + commands.join('\` and/or \`') + '\`' : ''}  on you for \`${require}\` time(s)`,
-            TASK_DESC_ROLE: (roles, guild) => `• Has role ${roles.join(' and/or ')} in server **${guild}**`,
+            TASK_DESC_ROLE: (roles, guild) => `• Has role ${roles.map(r => "**"+r+"**").join(' and/or ')} in server **${guild}**`,
             TASK_DESC_COLLECT_ITEM: (emoji, name, require) => `• Collect \`${(require || '').toString().padStart(2, '0')}\` **${emoji} ${name}**`,
             TASK_DESC_HAS_ITEM: (emoji, name, require) => `• Has \`${(require || '').toString().padStart(2, '0')}\` **${emoji} ${name}**`,
             TASK_DESC_HAS_GUILD: (guild, before, after) => `• Join server **${guild}**${before ? ` before \`${before}\`` : ''}${before && after ? ' and ' : ''}${after ? ` after \`${after}\`` : ''}`,
@@ -736,16 +740,20 @@ module.exports = class {
             TASK_ERR_MISSING_REQUIRE_FIELD: (id, field) => `${e.error} | Task **${id}** missing required field: \`${field}\``,
             TASK_REROLL_ERR_INVALID_TYPE: (types) => `${e.error} | Invalid task type. Try ${types.map((t) => "`" + t + "`").join(", ")}`,
             TASK_REROLL_SUCCESS: (type) => `${e.success} | Rerolled a \`${type}\` task!`,
+            TASK_REROLL_ERR_DONE: `${e.error} | You can't reroll a finished task, just wait for the next one!`,
             TASK_DONE_REWARD: (user, task, reward) => `${e.success} | **${user}**, you've finished task **${task}** and received **${reward}**`,
 
             /** GIVEAWAY */
             GIVEAWAY_DESCRIPTION: `Giveaways with requirements`,
             GIVEAWAY_START_DESCRIPTION: "Create and start new giveaway. For requirements, you need to create task first!",
-            GIVEAWAY_START_USAGE: `$giveaway start [duration] [winners] [title]\n${e.userPremium} $giveaway start [duration] [winners] [--task] [title]`,
-            GIVEAWAY_START_EXAMPLES: `$ga start 12h 3w One month Nitro classic\n${e.userPremium} $ga start 5d 2w --T001 One month Nitro classic`,
-            GIVEAWAY_LIST_DESCRIPTION: "List of ongoing giveaways in the server",
-            GIVEAWAY_LIST_USAGE: "$giveaway list",
-            GIVEAWAY_LIST_EXAMPLES: "$ga ls",
+            GIVEAWAY_START_USAGE: `$giveaway start [duration] [winners] [title]\n${e.userPremium} $giveaway start [duration] [winners] [--taskID] [title]`,
+            GIVEAWAY_START_EXAMPLES: `$ga s 12h 3w One month Nitro classic\n${e.userPremium} $ga s 5d 2w --5 One month Nitro classic`,
+            GIVEAWAY_LIST_DESCRIPTION: "List of ongoing giveaways in the server or search requirements process by giveaway's title",
+            GIVEAWAY_LIST_USAGE: "$giveaway list\n$giveaway [title]",
+            GIVEAWAY_LIST_EXAMPLES: "$ga ls\n$ga Nitro 01",
+            GIVEAWAY_REQUIREMENT_DESCRIPTION: "List of GA's requirements you've joined",
+            GIVEAWAY_REQUIREMENT_USAGE: "$giveaway require [title]",
+            GIVEAWAY_REQUIREMENT_EXAMPLES: "$ga req Nitro",
             GIVEAWAY_CANCEL_DESCRIPTION: "Cancel a giveaway",
             GIVEAWAY_CANCEL_USAGE: "$giveaway cancel [message ID]",
             GIVEAWAY_CANCEL_EXAMPLES: "$ga cc 676481304556077056",
@@ -775,15 +783,16 @@ module.exports = class {
             GIVEAWAY_START_AWAIT_TASK_DESC: (descs) => `Please enter the type of your task...\`\`\`${descs}\`\`\`\``,
             GIVEAWAY_START_TASK_CANCEL: `No task found`,
             GIVEAWAY_START_ERR_INVALID_QUANTITY: `${e.error} | Invalid number of winners`,
+            GIVEAWAY_START_ERR_INVALID_TITLE: `${e.error} | Invalid title`,
             GIVEAWAY_ADD_TASK_ERR_NOT_PREMIUM: `${e.error} | Giveaways with requirements only available for **Premium User**.`,
             GIVEAWAY_REACT_DESC: (emoji) => `React ${emoji} to join`,
-            GIVEAWAY_FOOTER: (quantity) => `Rolls ${quantity} win${parseInt(quantity) > 1 ? 's' : ''} at`,
-            GIVEAWAY_FOOTER_ENDED: (quantity) => `Rolled ${quantity} win${parseInt(quantity) > 1 ? 's' : ''} at`,
-            GIVEAWAY_NO_WINNERS: (title, link) => `Giveaway **${title}** ended, no winners`,
-            GIVEAWAY_CONGRATZ: (winners, title, link) => `Congratz ${winners}, you won the giveaway **${title}**`,
-            GIVEAWAY_CANCEL: (title, link) => `Giveaway **${title}** canceled`,
-            GIVEAWAY_TASK_HINT: (prefix) => `Use \`${prefix}task ga\` to confirm your requirements`,
-            GIVEAWAY_JUMP: (url) => `[Jump to giveaway](${url})`,
+            GIVEAWAY_FOOTER: (quantity) => `${quantity} win${parseInt(quantity) > 1 ? 's' : ''} | Rolls at`,
+            GIVEAWAY_FOOTER_REQ: (quantity, prefix) => `${quantity} winner${parseInt(quantity) > 1 ? 's' : ''} | Rolls at`,
+            GIVEAWAY_FOOTER_ENDED: (quantity) => `Rolled ${quantity} winner${parseInt(quantity) > 1 ? 's' : ''} at`,
+            GIVEAWAY_NO_WINNERS: (title, host) => `Giveaway **${title}** hosted by ${host} ended, no winners`,
+            GIVEAWAY_CONGRATZ: (winners, title, host) => `Congratz ${winners}, you won the giveaway **${title}** hosted by ${host}`,
+            GIVEAWAY_CANCEL: (title, host) => `Giveaway **${title}** hosted by ${host} canceled`,
+            GIVEAWAY_JUMP: (url) => `**[Jump to giveaway](${url})**`,
             GIVEAWAY_REROLL_MSG: (winner) => `New winner: ${winner}`,
 
             /* ITEM USAGES */
@@ -884,8 +893,8 @@ module.exports = class {
             CHARACTER_REROLL_USAGE: "$character reroll [ID ID ID]",
             CHARACTER_REROLL_EXAMPLES: "$c rr 23 24 25\n$c rr ",
             CHARACTER_UPGRADE_DESCRIPTION: "Upgrade your character",
-            CHARACTER_UPGRADE_USAGE: "$character upgrade [type] [times]",
-            CHARACTER_UPGRADE_EXAMPLES: "$c up offensive 3",
+            CHARACTER_UPGRADE_USAGE: "$character upgrade [charID] [gemID] [quantity]",
+            CHARACTER_UPGRADE_EXAMPLES: "$c up 2 3 5",
             CHARACTER_MINE_DESCRIPTION: "Check your characters",
             CHARACTER_MINE_USAGE: "$character mine (ID/name)",
             CHARACTER_MINE_EXAMPLES: "$c me\n$c 110\n$c nobi",
@@ -1016,7 +1025,7 @@ module.exports = class {
             GADGET_COMBINE_USAGE: "$gadget combine [ID] [quantity]",
             GADGET_COMBINE_EXAMPLES: "$gg cb 23 all",
             GADGET_UPGRADE_DESCRIPTION: "Upgrade your gadget",
-            GADGET_UPGRADE_USAGE: "$gadget upgrade [type] [times]",
+            GADGET_UPGRADE_USAGE: "$gadget upgrade [gadgetID] [gemID] [quantity]",
             GADGET_UPGRADE_EXAMPLES: "$gg up offensive 3",
             GADGET_MINE_DESCRIPTION: "Check your gadgets",
             GADGET_MINE_USAGE: "$gadget mine (ID/name)",
@@ -1096,7 +1105,7 @@ module.exports = class {
             WEAPON_AUCTION_USAGE: "$weapon auction [ID] [low price] [high price] (quantity)",
             WEAPON_AUCTION_EXAMPLES: "$wp au 23 100 200\n$wp au 23 100 200 5",
             WEAPON_UPGRADE_DESCRIPTION: "Upgrade your weapon",
-            WEAPON_UPGRADE_USAGE: "$weapon upgrade [type] [times]",
+            WEAPON_UPGRADE_USAGE: "$weapon upgrade [weaponID] [gemID] [quantity]",
             WEAPON_UPGRADE_EXAMPLES: "$wp up offensive 3",
             WEAPON_MINE_DESCRIPTION: "Check your weapons",
             WEAPON_MINE_USAGE: "$weapon mine (ID/name)\n$weapon mine -el (element)",
@@ -1115,7 +1124,7 @@ module.exports = class {
             WEAPON_DELETE_EXAMPLES: "$wp del 1eeeeeeeeeeeeee0",
             WEAPON_EDIT_DESCRIPTION: "Edit a weapon",
             WEAPON_EDIT_USAGE: "$wp edit [ID] [field] [value]",
-            WEAPON_EDIT_EXAMPLES: "$c edit 1eeeeeeeeeeeeeee0 elems fi wo",
+            WEAPON_EDIT_EXAMPLES: "$c edit 1eeeeeeeeeeeeeee0 element fi",
             WEAPON_EQUIP_DESCRIPTION: "Equip a weapon",
             WEAPON_EQUIP_USAGE: "$weapon equip [ID]",
             WEAPON_EQUIP_EXAMPLES: "$wp use 20",
@@ -1145,7 +1154,7 @@ module.exports = class {
             WEAPON_SELL_ID_SUCCESS: (user, uWeapon, quantity, price) => `${e.success} | **${user}** sold **${clearifyNumber(quantity)}** x ${e.weaponType[uWeapon.weapon.type]} **${uWeapon.weapon.name}** ${e.weaponLevel[uWeapon.level]} for **${clearifyNumber(price)}** ${e.dorayaki}`,
             WEAPON_UNIFY_ERR_NOT_ENOUGH: `${e.error} | Not enough weapons to unify`,
             WEAPON_UNIFY_ERR_ELEMENT: (weapon) => `${e.error} | Your **${weapon}** has no new elements to unify`,
-            WEAPON_UNIFY_SUCCESS: (user, newWeapon, quantity) => `${e.success} | **${user}** has unified sucessfully **${clearifyNumber(quantity)}** ${newWeapon.elems.map((el) => e.weaponType[el]).join("")} **${newWeapon.name}** ${e.weaponLevel["1"]}}`,
+            WEAPON_UNIFY_SUCCESS: (user, newWeapon, quantity) => `${e.success} | **${user}** has unified sucessfully **${clearifyNumber(quantity)}** ${e.weaponType[newWeapon.el]} **${newWeapon.name}** ${e.weaponLevel["1"]}}`,
             WEAPON_INFO_EXTEND_INDEX: "Extend",
             WEAPON_INFO_BASIC_INDEX: "Basic",
 
@@ -1163,15 +1172,112 @@ module.exports = class {
             ME_DESCRIPTION: "Show your battle equipments",
             ME_USAGE: "$me",
             ME_EXAMPLES: "$me",
-            GADGET_1: "Gadget 1",
-            GADGET_2: "Gadget 2",
-            GADGET_3: "Gadget 3",
             RANK_POINT: (point) => `Rank point: __**${clearifyNumber(point)}**__`,
             
+            /** FIGHT */
+            FIGHT_DESCRIPTION: "Fight with bosses and other users",
+            FIGHT_USAGE: "$fight",
+            FIGHT_EXAMPLES: "$fight",
+            FIGHT_START_TITLE: (user, type) => `${user} started a ${type} fight`,
+            FIGHT_ERR_NOT_EQUIP: `${e.error} | You haven't chosen a character or equiped weapon yet`,
+            FIGHT_ERR_ALREADY: (username) => `${e.error} | **${username}**, you can not using this command while in fight`,
+            FIGHT_RANK_MATCH_NOT_FOUND: (username) => `${e.error} | **${username}**, couldn't find you a suitable rank match right now, try again later`,
+
+            /** WORK */
+            WORK_DESCRIPTION: "Get some materials for testing",
+            WORK_USAGE: "$work",
+            WORK_EXAMPLES: "$w",
+
             /** STATS */
             STAT_DESCRIPTION: "Show stats",
             STAT_USAGE: "$stat",
             STAT_EXAMPLES: "$stat",
+
+            /** INFO */
+            INFO_DESCRIPTION: "Show bot information",
+            INFO_USAGE: "$info",
+            INFO_EXAMPLES: "$info",
+
+            /** GIFs */
+            GIF_DESCRIPTION: "Cute gifs to delivery your emotions",
+            GIF_USAGE: "$pat [content]",
+            GIF_EXAMPLES: "$pat a cute cat",
+            GIF_CONTENT: (type, user, targets) => {
+                let keyword = ''
+                let target = false
+                switch(type) {
+                    case 'pat':
+                        keyword = 'pats'
+                        target = true
+                        break
+                    case 'awoo':
+                        keyword = 'awoos'
+                        break
+                    case 'blush':
+                        keyword = 'blushes'
+                        break
+                    case 'clagwimoth':
+                        keyword = '?.?'
+                        break
+                    case 'bang':
+                        keyword = 'bangchiu'
+                        target = true
+                        break
+                    case 'cry':
+                        keyword = 'crys a river'
+                        break
+                    case 'cuddle':
+                        keyword = 'cuddles'
+                        target = true
+                        break
+                    case 'dance':
+                        keyword = 'is dancing'
+                        break
+                    case 'hug':
+                        keyword = 'hugs'
+                        target = true
+                        break
+                    case 'kiss':
+                        keyword = 'kissed'
+                        target = true
+                        break
+                    case 'lick':
+                        keyword = 'licked'
+                        target = true
+                        break
+                    case 'nom':
+                        keyword = 'nom...nom'
+                        break
+                    case 'pout':
+                        keyword = 'pouts'
+                        break
+                    case 'slap':
+                        keyword = 'slaps'
+                        target = true
+                        break
+                    case 'punch':
+                        keyword = 'punched'
+                        break
+                    case 'smile':
+                        keyword = 'smiles'
+                        break
+                    case 'smug':
+                        keyword = 'smugs'
+                        break
+                    case 'baka':
+                        keyword = 'is baka'
+                        break
+                    case 'stare':
+                        keyword = 'is staring at'
+                        target = true
+                        break
+                    case 'thinking':
+                        keyword = 'is thinking'
+                        break
+                }
+                return `**${user}** ${keyword} ${targets ? targets : (target ? 'someone' : '')}`
+            },
+            GIF_ERR_NOT_FOUND: `${e.error} | Couldn't find you that gif now, try again later...`,
 
             /* COMMON WORDS */
             ID_NOT_FOUND: (id) => `ID **${id}** not found`,
@@ -1230,6 +1336,8 @@ module.exports = class {
             ELEMENTS: "Elements",
             NICKNAME: "Nickname",
             SOMEONE: "Someone",
+            ENEMY: "Enemy",
+            SKILL: "Skill",
             
             /** CONVERT MS */
             convertMs: (ms) => this.convertMs(ms)
@@ -1303,4 +1411,3 @@ module.exports = class {
     }
 
 }
-
