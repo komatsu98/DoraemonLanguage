@@ -40,8 +40,9 @@ module.exports = class {
             ERR_INPUT_INVALID_CHARACTER: `${e.error} | Nhân vật không hợp lệ`,
             ERR_INVALID_CHOICE: (options) => `${e.error} | Lựa chon không hợp lệ . Hãy thử ${options.map((p) => "`"+p+"`").join(", ")}`,
             ERR_CMD_NO_USER: `${e.error} | Không thể tìm được người dùng `,
-            JSON_ERR_FORMAT: `${e.error} | Định dạng JSON không hợp lệ`,
-            ERR_PERMISSION_LOWER_ROLE: `${e.error} __**Missing permissions**__\n\nI Cần quyền \`MANAGE_ROLES\` và vị trí role của **Doraemon** phải đủ cao để làm điều này!`,
+            JSON_ERR_FORMAT: `${e.error} | Định dạng JSON không hợp lệ`,Hãy thử ${Array.isArray(FIELDS) ? FIELDS.map((p) => "`" + p + "`").join(", ") : FIELDS}`,
+            INVALID_FIELD: (field, FIELDS) => `Field **${field}** not exist. Thử ${Array.isArray(FIELDS) ? FIELDS.map((p) => "`" + p + "`").join(", ") : FIELDS}`,
+            ERR_PERMISSION_LOWER_ROLE: `${e.error} __**Missing permissions**__\n\nI Cần quyền \`MANAGE _ROLES\` và vị trí role của **Doraemon** phải đủ cao để làm điều này!`,
             PREFIX_INFO: (prefix) => `${e.success} | Prefix hiện tại của server là  \`${prefix}\`!`,
             
             /* PING COMMAND */
@@ -76,15 +77,15 @@ module.exports = class {
             HELP_DESC_SUBCMD: (prefix, cmd) => `sử dụng \`${prefix}help ${cmd} [subcommand]\` để biết thêm chi tiết`,
 
             /* COINFLIP COMMAND */
-            COINFLIP_DESCRIPTION: "Xóc đĩa cổ điển (chọn: \`t\`, \`s\`) và chế độ mở rộng (chọn: `0s`-`4s`, `0t`-`4t`)",
+            COINFLIP_DESCRIPTION: "Xóc đĩa với 2 chế độ\n**Cổ điển**: chọn `t`, `s` - win `x2` bet\n**Mở rộng**: chọn `1s`-`3s` or `1t`-`3t` - thắng `x3.5` số tiền cuợc, chọn `4s`,`4n` or `0s`, `0n` - thắng `x15` số tiền cược ",
             COINFLIP_USAGE: "$xocdia [bet] (chọn)",
             COINFLIP_EXAMPLES: "$xocdia 500\n$xocdia all t\n$xocdia all 3t",
             COINFLIP_NAME_CLASSIC: "Xóc đĩa cổ điển",
             COINFLIP_NAME_EXTENDED: "Xóc đĩa mở rộng",
             COINFLIP_BET_DESCRIPTION: (username, amount, choice) => `**${username}** đặt **${clearifyNumber(amount)} catnip** vào **${choice}**`,
             COINFLIP_FLIPPING: "Xóc Xóc <a:CAT_hyper:588594746176307200>",
-            COINFLIP_CHOICES_RESULT: (CHOICES, winChoices) => `Result: [**${CHOICES[winChoices[0]]}**] [**${CHOICES[winChoices[1]]}**] [**${CHOICES[winChoices[2]]}**] [**${CHOICES[winChoices[3]]}**]`,
-            COINFLIP_FINAL_RESULT: (username, amount, choice, reward) => `**${username}** đặt **${clearifyNumber(amount)} catnip** vào **${choice.toUpperCase()}**` + (reward > 0 ? ` và thắng **${clearifyNumber(reward)} catnip**` : " Và thua hết :("),
+            COINFLIP_CHOICES_RESULT: (CHOICES, winChoices) => `Result: ${e.coinflip[CHOICES[winChoices[0]]]} ${e.coinflip[CHOICES[winChoices[1]]]} ${e.coinflip[CHOICES[winChoices[2]]]} ${e.coinflip[CHOICES[winChoices[3]]]}`,
+            COINFLIP_FINAL_RESULT: (username, amount, choice, reward) => `**${username}** đã đặt **${clearifyNumber(amount)} catnip** vào **${choice}**` + (reward > 0 ? ` và thắng **${clearifyNumber(reward)} catnip**` : " và mất hết :("),
 
             /* CATNIP */
             CATNIP_ERR_NOT_ENOUGH: `${e.error} | Không đủ catnip`,
@@ -103,7 +104,7 @@ module.exports = class {
             DAILY_HIGH_STREAK: (streak) =>  `Chuỗi **High** (${streak})`,
             DAILY_HIGH_NEXT: (amount) => `Lần **High** tiếp theo: ${clearifyNumber(amount)} catnip`,
             DAILY_VOTE_STREAK: (streak) =>  `Chuỗi **Vote** (${streak})`,
-            DAILY_VOTE_NEXT: (min, max) => `Lần **Vote** tiếp theo: ngẫu nhiên ${clearifyNumber(min)} - ${clearifyNumber(max)} catnip (+250 every 5 votes)`,
+            DAILY_VOTE_NEXT: (min, max) => `Lần vote tiếp theo : Ngẫu nhiên ${clearifyNumber(min)} - ${clearifyNumber(max)} catnip`,
             DAILY_VOTE_TIP: `Vote **Doraemon** on __**[link](${l.botVote})**__ (mỗi 12 tiếng) để nhận được nhiều phần thưởng hấp dẫn`,
             DAILY_PREMIUM: (point) => `Premium (${point} points)`,
             DAILY_PREMIUM_COUNT: (bonus) => `Bonus: ${clearifyNumber(bonus)} catnip`,
@@ -229,7 +230,7 @@ module.exports = class {
             CONFESSION_WAIT_PENDING: (channel) => `${e.success} | confession của bạn đang chờ được duyệt trước khi gửi vào  **${channel}**`,
             CONFESSION_REPLY_ERR_INVALID_COUNT: (count) => `${e.error} | Số cofession không hợp lệ: **${count}**`,
             CONFESSION_REPLY_ERR_NOT_PRE: `Reply confession chỉ hoạt động với **Guild Premium**`,
-            CONFESSION_SEND_ERR_ATTACH_NOTPRE: `Attach images chỉ hoạt động với **Guild Premium**`,
+            CONFESSION_SEND_ERR_ATTACH_NOTPRE: `Đính kèm ảnh mà không có kênh kiểm duyệt dễ gây ra tình trạng spam`,
 
             /** COUNTING */
             COUNTING_DESCRIPTION_PROVIDED: `Kênh đếm số`,
@@ -245,7 +246,7 @@ module.exports = class {
             LANGUAGE_SUCCESS: (lang) => `${e.success} | Ngôn ngữ của máy chủ đã được đặt là \`${lang}\`!`,
 
             /* LIXI */
-            LIXI_DESCRIPTION: "Cho đi và nhận lại. Thêm `rd` để ngẫu nhiên, `s` để cho chỉ máy chủ hiện tại ",
+            LIXI_DESCRIPTION: "Cho đi và nhận lại. Thêm `rd` để ngẫu nhiên, `s` để cho chỉ server hiện tại ",
             LIXI_USAGE: "$lixi list\n$lixi take\n$lixi give [amount] (boxes) (random) (server only)",
             LIXI_EXAMPLES: "$lixi give 1000 10\n$lixi give 5000 rd\n$lixi give 3000 s",
             LIXI_ERR_INVALID_BOX_OR_AMOUNT: `${e.error} | Hộp quà hoặc số catnip không hợp lệ !`,
@@ -256,6 +257,9 @@ module.exports = class {
             LIXI_TAKE_SUCCESS: (num, total, givers) => `${e.success} | bạn đã lấy được **${num}** hộp quà với tổng số catnip là  **${clearifyNumber(total)} catnip** từ  **Lixi** của ${givers}`,
             LIXI_ERR_NO_BOX: `${e.error} | Hết lì xì rồi , thêm ngay nàoo :CAT_moneyyyy: !`,
             LIXI_ERR_ALL_TAKEN: `${e.error} | Bạn không thể lấy thêm , Hãy cho đi một ít!`,
+            LIXI_LIST_TITLE: "Danh sách lì xì ",
+            LIXI_INFO: (remain, turns, random, guild) => `**${clearifyNumber(remain)}** catnip ở **${turns}** hộp quà ${random ? "`[r]`" : ''}${guild ? "`[g]`" : ''}`,
+
 
             /** VOICECHANNEL */
             VOICECHANNEL_DESCRIPTION: "Kênh Voice Tự Động",
@@ -345,8 +349,8 @@ module.exports = class {
             VOICECHANNEL_ERR_HOST_EXISTS: `${e.error} | Phòng này đã có chủ!`,
             VOICECHANNEL_ERR_ALREADY_HOST: `${e.loading} | Bạn đang là chủ phòng!`,
             VOICHANNEL_ERR_MISSING_CATE_PERMS: `${e.error} | Thiếu quyền!\nCho Doraemon tất cả các quyền sau :  (\`Manage Channel\` and \`Manage Permission\`) với kênh **Creator channel**`,
-            CHANNEL_VOICECHANNELCREATOR_ERR_MAX: (guild) => `${e.error} | Server **${guild}** đã đạt đến giới hạn Creator channels. Nâng cấp lên **Guild Premium** để sử dụng với không giới hạn!!`,
-            CHANNEL_CONFESSION_ERR_MAX: (guild, cn) => `${e.error} | Server **${guild}** đã đạt đến giới hạn Confession channel (ID: ${cn}). Nâng cấp lên **Guild Premium** để sử dụng với không giới hạn!!`,
+            CHANNEL_VOICECHANNELCREATOR_ERR_MAX: (guild, channel) => `${e.error} | Server **${guild}** đã đạt đến giới hạn Creator channels (**${channel}**). Nâng cấp lên **Guild Premium** để sử dụng với không giới hạn!!`,
+            CHANNEL_CONFESSION_ERR_MAX: (guild, cn) => `${e.error} | Server **${guild}** đã đạt đến giới hạn Confession channel (<#${cn}>). Nâng cấp lên **Guild Premium** để sử dụng với không giới hạn!!`,
 
             /** LINKS */
             LINK_DESCRIPTION: "Các link hữu ích",
@@ -484,15 +488,17 @@ module.exports = class {
             GTN_HINT_LVL_3: (numbers) => [`Là tập hợp của các số: **${numbers}**`],
 
             /** BAUCUA */
-            BAUCUA_DESCRIPTION: "Game Baucua. Chọn: `tom`, `ga`, `nai`, `ca`, `bau`, `cua`",
+            BAUCUA_DESCRIPTION: `Bầu Cua\nChoices: \`tom\` (${e.baucua['tom']}), \`ga\` (${e.baucua['ga']}), \`nai\` (${e.baucua['nai']}), \`ca\` (${e.baucua['ca']}), \`bau\` (${e.baucua['bau']}), \`cua\` (${e.baucua['cua']})`,
             BAUCUA_USAGE: "$baucua [đặt] (chọn)",
             BAUCUA_EXAMPLES: "$bc 5000\n$bc all tom",
             BAUCUA_START_TITLE: " Bắt đầu lắc",
             BAUCUA_COUNTDOWN: (time) => `kết thúc vào ${this.convertMs(time)}`,
-            BAUCUA_END_TITLE: "Baucua Ended",
-            BAUCUA_BET_DESCRIPTION: (user, amount, choice) => `**${user}** đã đặt **${clearifyNumber(amount)} catnip** vào **${choice}**`,
-            BAUCUA_WIN_DESCRIPTION: (user, amount) => `${user} thắng **${clearifyNumber(amount)} catnip**`,
-
+            BAUCUA_TITLE: "Baucua",
+            // BAUCUA_COUNTDOWN: (time) => `ends in ${this.convertMs(time)}`,
+            // BAUCUA_END_TITLE: "Baucua Ended",
+            BAUCUA_BET_DESCRIPTION: (user, amount, choice, timeout) => `${e.baucua['icon']} **|** **${user}** đã đặt **${clearifyNumber(amount)} catnip** vào ${e.baucua[choice]} (\`${this.convertMs(timeout)} cuối\`)`,
+            BAUCUA_WIN_DESCRIPTION: (user, amount) => `${e.baucua['icon']} **|** ${user} đã thắng **${clearifyNumber(amount)} catnip**`,
+		    
             /** BLACKJACK */
             BLACKJACK_DESCRIPTION: "Xì Dách PvP",
             BLACKJACK_USAGE: "",
