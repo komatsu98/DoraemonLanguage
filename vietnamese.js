@@ -29,7 +29,7 @@ module.exports = class {
             ERR_OCCURRED: `${e.error} | Có một lỗi đã xảy ra . Vui lòng thử lại sau vài phút!`,
             ERR_CMD_GUILDONLY: `${e.error} | Lệnh này không có hiệu lực trong tin nhắn riêng tư!`,
             ERR_CMD_MAINGUILDONLY: `${e.error} | Lệnh này không có hiệu lực bên ngoài máy chủ chính!`,
-            ERR_CMD_INVALID_ARGS: (prefix, cmd) => `${e.error} | Hành động không hợp lệ . Type \`${prefix}help ${cmd}\` để biết thêm chi tiết!`,
+            ERR_CMD_INVALID_ARGS: (prefix, cmd) => `${e.error} | Hành động không hợp lệ . Nhập \`${prefix}help ${cmd}\` để biết thêm chi tiết!`,
             ERR_CMD_NOT_FOUND: (cmd) => `${e.error} | Lệnh \`${cmd}\` không hợp lệ`,
             ERR_CMD_DISABLED_CHANNEL: (cmd) => `${e.error} | Lệnh${cmd ? " `"+ cmd + "`" : "s"} đã bị vô hiệu hóa tại kênh này`,
             ERR_CMD_DISABLED_GUILD: (cmd) => `${e.error} | Lệnh${cmd ? " `"+ cmd + "`" : "s"} đã bị vô hiệu hóa tại server này`,
@@ -46,33 +46,33 @@ module.exports = class {
             PREFIX_INFO: (prefix) => `${e.success} | Prefix hiện tại của server là  \`${prefix}\`!`,
             
             /* PING COMMAND */
-            PING_DESCRIPTION: "Displays the bot latency!",
+            PING_DESCRIPTION: "Hiển thị độ trễ của bot!",
             PING_USAGE: "$ping",
             PING_EXAMPLES: "$ping",
             PING_WAIT: `${e.loading} | Pinging...`,
-            PING_RESULT: (ms) => `${e.success} | Pong! Latency: \`${ms}\` ms!`,
+            PING_RESULT: (ms) => `${e.success} | Pong! Độ trễ: \`${ms}\` ms!`,
 
             /* BUILD EMOJIS COMMAND */
-            BUILD_EMOJIS_DESCRIPTION: "Automatically adds the emojis necessary for the bot to work properly and generates a configuration!",
+            BUILD_EMOJIS_DESCRIPTION: "Tự động thêm biểu tượng cảm xúc cần thiết để bot hoạt động đúng cách và tạo cấu hình!",
             BUILD_EMOJIS_USAGE: "$build-emojis",
             BUILD_EMOJIS_EXAMPLES: "$build-emojis",
-            BUILD_EMOJIS_IN_PROGRESS: `${e.success} | Adding emojis is in progress...-`,
-            BUILD_EMOJIS_INFOS: `${e.success} | Copy and paste this into your configuration!`,
+            BUILD_EMOJIS_IN_PROGRESS: `${e.success} | Thêm biểu tượng cảm xúc đang được tiến hành...-`,
+            BUILD_EMOJIS_INFOS: `${e.success} | Sao chép và dán vào cấu hình của bạn!`,
 
             /* HELP COMMAND */
             HELP_TITLE: "Commands List",
-            HELP_SUBTITLE: (prefix) => `Use \`${prefix}help [command]\` để biết thêm chi tiết\nCần hỗ trợ? Hãy tham gia máy chủ của chúng tôi [Cat](${l.supportChannelInvite})`,
+            HELP_SUBTITLE: (prefix) => `Dùng \`${prefix}help [command]\` để biết thêm chi tiết\nCần hỗ trợ? Hãy tham gia máy chủ của chúng tôi [Cat](${l.supportChannelInvite})`,
             HELP_HEADINGS: [
-                        "Command:",
-                        "Usage:",
-                        "Examples:",
-                        "Group:",
-                        "Description:",
-                        "Aliases:",
-                "User permissions:",
-                "Bot permissions:"
+                        "Lệnh:",
+                        "Sử dụng:",
+                        "Ví dụ:",
+                        "Nhóm:",
+                        "Mô tả:",
+                        "Các alias:",
+                "Quyền Người dùng:",
+                "Quyền Bot:"
             ],
-            HELP_NO_ALIASES: "No alias.",
+            HELP_NO_ALIASES: "Không alias.",
             HELP_ERR_CMD_NOT_FOUND: (cmd) => `${e.error} | Lệnh \`${cmd}\` là lệnh gì dị chưa thấy bao giờ -.-!`,
             HELP_DESC_SUBCMD: (prefix, cmd) => `sử dụng \`${prefix}help ${cmd} [subcommand]\` để biết thêm chi tiết`,
 
@@ -120,22 +120,22 @@ module.exports = class {
             GIVE_INFO: (from, to, amount) => `**${to}** nhận được **${clearifyNumber(amount)} catnip** từ **${from}**`,
 
             /* ADD */
-            ADD_DESCRIPTION: "add catnip",
+            ADD_DESCRIPTION: "thêm catnip",
             ADD_USAGE: "$add [@user] [amount]",
             ADD_EXAMPLES: "$add @Komatsu 100",
-            ADD_ERR_NO_USER: `${e.error} | Missing user`,
-            ADD_ERR_NO_AMOUNT: `${e.error} | Missing catnip amount`,
-            ADD_ERR_USER_BOT: `${e.error} | Cannot add catnip to bot`,
-            ADD_INFO: (from, to, amount) => `**${to}** has been added **${clearifyNumber(amount)} catnip** by **${from}**`,
+            ADD_ERR_NO_USER: `${e.error} | Thiếu người dùng`,
+            ADD_ERR_NO_AMOUNT: `${e.error} | Thiếu số lượng catnip`,
+            ADD_ERR_USER_BOT: `${e.error} | Không thể thêm catnip vào bot`,
+            ADD_INFO: (from, to, amount) => `**${to}** đã được thêm **${clearifyNumber(amount)} catnip** bởi **${from}**`,
 
             /* TAKE */
-            TAKE_DESCRIPTION: "take catnip",
+            TAKE_DESCRIPTION: "lấy catnip",
             TAKE_USAGE: "$take [@user] [amount]",
             TAKE_EXAMPLES: "$take @Komatsu 100",
-            TAKE_ERR_NO_USER: `${e.error} | Missing user`,
-            TAKE_ERR_NO_AMOUNT: `${e.error} | Missing catnip amount`,
-            TAKE_ERR_USER_BOT: `${e.error} | Cannot take catnip from bot`,
-            TAKE_INFO: (from, to, amount) => `**${to}** has been taken **${clearifyNumber(amount)} catnip** by **${from}**`,
+            TAKE_ERR_NO_USER: `${e.error} | Thiếu người dùng`,
+            TAKE_ERR_NO_AMOUNT: `${e.error} | Thiếu số lượng catnip`,
+            TAKE_ERR_USER_BOT: `${e.error} | Không thể lấy catnip từ bot`,
+            TAKE_INFO: (from, to, amount) => `**${to}** đã được lấy **${clearifyNumber(amount)} catnip** bởi **${from}**`,
 
             /** CLEAN */
             CLEAN_DESCRIPTION: "Xóa 15 tin nhắn cuối cùng của Doraemon",
@@ -151,17 +151,17 @@ module.exports = class {
             /**
             * Feature Channels
             */
-            XINH_DESCRIPTION_PROVIDED: `Source for \`girl\` command`,
-            ZAI_DESCRIPTION_PROVIDED: `Source for \`boy\` command`,
-            MEO_DESCRIPTION_PROVIDED: `Source for \`meo\` command`,
-            MEME_DESCRIPTION_PROVIDED: `Source for \`meme\` command`,
-            SEXY_DESCRIPTION_PROVIDED: `Source for \`sexy\` command`,
-            FOOD_DESCRIPTION_PROVIDED: `Source for \`food\` command`,
+            XINH_DESCRIPTION_PROVIDED: `Nguồn của \`girl\` command`,
+            ZAI_DESCRIPTION_PROVIDED: `Nguồn của \`boy\` command`,
+            MEO_DESCRIPTION_PROVIDED: `Nguồn của \`meo\` command`,
+            MEME_DESCRIPTION_PROVIDED: `Nguồn của \`meme\` command`,
+            SEXY_DESCRIPTION_PROVIDED: `Nguồn của \`sexy\` command`,
+            FOOD_DESCRIPTION_PROVIDED: `Nguồn của \`food\` command`,
 
             BANK_DESCRIPTION_PROVIDED: "tự động chuyển cowoncy sang catnip",
             BANK_EXCHANGE_SUCCESS: (username, amount) => `${e.success} | **${username}**, Đổi thành công. Hiện tại bạn có **${clearifyNumber(amount)} catnip**`,
-            CHARWORDCHAIN_DESCRIPTION_PROVIDED: "Word chain | Character connect",
-            WORDWORDCHAIN_DESCRIPTION_PROVIDED: "Word chain | Word connect",
+            CHARWORDCHAIN_DESCRIPTION_PROVIDED: "Nối từ | Nối chữ",
+            WORDWORDCHAIN_DESCRIPTION_PROVIDED: "Nối từ | Nối từ",
             WORDCHAIN_ERR_INVALIDWORD: (con) => `${e.error} | Từ tiếp theo bắt đầu với **${con}**! sử dụng \`> <content>\` để nối tiếp.`,
             WORDCHAIN_ERR_NEXTTURN: (username) => `${e.error} | **${username}** từ từ , đợi những người khác! Sử dụng \`> <content>\` để nối tiếp.`,
             ONEWORDSTORY_DESCRIPTION_PROVIDED: "One-word story",
